@@ -8,6 +8,8 @@ app.use(cors());
 
 dotenv.config();
 
+console.log("Hello people")
+
 const port = process.env.PORT || 3000;
 
 app.listen(3000, () => {
