@@ -8,6 +8,13 @@ app.use(cors());
 
 dotenv.config();
 
+
+
+const reviewRoutes = require("./routes/reviewRoutes")
+app.use("/reviews", reviewRoutes)
+
+
+
 const port = process.env.PORT || 3000;
 
 app.listen(3000, () => {
