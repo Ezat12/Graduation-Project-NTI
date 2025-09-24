@@ -3,15 +3,16 @@ const mongoose = require("mongoose");
 const studentCourseSchema = new mongoose.Schema(
   {
     userId: {
-      type: String,
-      ref: 'User', 
-      required: true
+      type: mongoose.Schema.ObjectId,
+      ref: "User",
+      required: [true, "user id is required"],
     },
-    courses: {
-      type: [String],
-      ref: 'Course',
-      required: true
-    }
+    courses: [
+      {
+        type: mongoose.Schema.ObjectId,
+        ref: "Course",
+      },
+    ],
   },
   { timestamps: true }
 );
