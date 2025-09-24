@@ -7,6 +7,7 @@ const {
   updateCategory,
   deleteCategory,
 } = require("../controllers/category.controller");
+const protectAuth = require("../middleware/protectAuth.middleware");
 const {
   createCategoryValidator,
   deleteCategoryValidator,
