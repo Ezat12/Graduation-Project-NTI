@@ -2,18 +2,14 @@ const express = require("express");
 const app = express();
 const cors = require("cors");
 const dotenv = require("dotenv");
+const reviewRoutes = require("./routes/review.routes");
 
 app.use(express.json());
 app.use(cors());
 
 dotenv.config();
 
-
-
-const reviewRoutes = require("./routes/reviewRoutes")
-app.use("/reviews", reviewRoutes)
-
-
+app.use("/reviews", reviewRoutes);
 
 const port = process.env.PORT || 3000;
 
