@@ -5,6 +5,7 @@ const dotenv = require("dotenv");
 const connectionDB = require("./config/connectionDB");
 const usersRoute = require("./routes/user.route");
 const authRoute = require("./routes/auth.route");
+const reviewRoutes = require("./routes/review.routes");
 const ApiError = require("./utils/apiError");
 
 app.use(express.json());
@@ -17,6 +18,7 @@ connectionDB();
 
 app.use("/api/v1/users", usersRoute);
 app.use("/api/v1/auth", authRoute);
+app.use("/reviews", reviewRoutes);
 
 app.use((req, res, next) => {
   next(new ApiError("Route is not success", 400));
@@ -30,6 +32,7 @@ app.use((err, req, res, next) => {
     stack: err.stack,
   });
 });
+
 
 const port = process.env.PORT || 3000;
 
