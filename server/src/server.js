@@ -1,6 +1,8 @@
 const express = require("express");
+const mongoose = require("mongoose");
 const app = express();
 const cors = require("cors");
+<<<<<<< HEAD
 const dotenv = require("dotenv");
 const connectionDB = require("./config/connectionDB");
 const usersRoute = require("./routes/user.route");
@@ -8,10 +10,13 @@ const authRoute = require("./routes/auth.route");
 const reviewRoutes = require("./routes/review.routes");
 const ApiError = require("./utils/apiError");
 
+=======
+const categoryRoutes = require("./routes/category.routes");
+const errorHandler = require("./utils/errorHandler");
+>>>>>>> feature-branch
 app.use(express.json());
 app.use(cors());
-
-dotenv.config();
+app.use("/categories", categoryRoutes);
 
 // Connection DB
 connectionDB();
