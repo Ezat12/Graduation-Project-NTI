@@ -7,8 +7,9 @@ exports.createCategory = asyncHandler(async (req, res, next) => {
   await category.save();
 
   res.status(201).json({
+    status: "success",
     message: "Category created successfully",
-    data: { category },
+    data: category,
   });
 });
 
@@ -20,9 +21,9 @@ exports.getCategories = asyncHandler(async (req, res, next) => {
   }
 
   res.status(200).json({
-    message: "success",
+    status: "success",
     results: categories.length,
-    data: { categories },
+    data: categories,
   });
 });
 
@@ -34,13 +35,16 @@ exports.getCategory = asyncHandler(async (req, res, next) => {
   }
 
   res.status(200).json({
-    message: "success",
-    data: { category },
+    status: "success",
+    data: category,
   });
 });
 
 exports.updateCategory = asyncHandler(async (req, res, next) => {
-  const category = await Category.findByIdAndUpdate(req.params.id, req.body, {new: true,runValidators: true,});
+  const category = await Category.findByIdAndUpdate(req.params.id, req.body, {
+    new: true,
+    runValidators: true,
+  });
 
   if (!category) {
     return next(new AppError("Category not found", 404));
@@ -48,7 +52,7 @@ exports.updateCategory = asyncHandler(async (req, res, next) => {
 
   res.status(200).json({
     message: "Category updated successfully",
-    data: { category },
+    data: category,
   });
 });
 
