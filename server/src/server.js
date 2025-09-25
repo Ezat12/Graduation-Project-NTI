@@ -8,6 +8,7 @@ const authRoute = require("./routes/auth.route");
 const reviewRoutes = require("./routes/review.routes");
 const ApiError = require("./utils/apiError");
 const categoryRoutes = require("./routes/category.routes");
+const studentCourseRoutes = require("./routes/studentCourse.route");
 const errorHandler = require("./middleware/errorHandler.middleware");
 
 app.use(express.json());
@@ -21,12 +22,14 @@ app.use("/api/v1/users", usersRoute);
 app.use("/api/v1/auth", authRoute);
 app.use("/api/v1/reviews", reviewRoutes);
 app.use("/api/v1/categories", categoryRoutes);
+app.use("/api/v1/studentCourse", studentCourseRoutes);
 
 app.use((req, res, next) => {
   next(new ApiError("Route is not success", 400));
 });
 
 app.use(errorHandler);
+
 
 const port = process.env.PORT || 3000;
 
