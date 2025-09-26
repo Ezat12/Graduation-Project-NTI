@@ -11,7 +11,7 @@ const categoryRoutes = require("./routes/category.routes");
 const studentCourseRoutes = require("./routes/studentCourse.route");
 const uploadRoute = require("./routes/upload.route");
 const errorHandler = require("./middleware/errorHandler.middleware");
-
+const courseRoute = require("./routes/course.route")
 app.use(express.json());
 app.use(cors());
 dotenv.config();
@@ -25,6 +25,7 @@ app.use("/api/v1/uploads", uploadRoute);
 app.use("/api/v1/reviews", reviewRoutes);
 app.use("/api/v1/categories", categoryRoutes);
 app.use("/api/v1/studentCourse", studentCourseRoutes);
+app.use("/course",courseRoute)
 
 app.use((req, res, next) => {
   next(new ApiError("Route is not success", 400));
