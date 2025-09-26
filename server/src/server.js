@@ -9,6 +9,7 @@ const reviewRoutes = require("./routes/review.routes");
 const ApiError = require("./utils/apiError");
 const categoryRoutes = require("./routes/category.routes");
 const studentCourseRoutes = require("./routes/studentCourse.route");
+const uploadRoute = require("./routes/upload.route");
 const errorHandler = require("./middleware/errorHandler.middleware");
 
 app.use(express.json());
@@ -20,6 +21,7 @@ connectionDB();
 
 app.use("/api/v1/users", usersRoute);
 app.use("/api/v1/auth", authRoute);
+app.use("/api/v1/uploads", uploadRoute);
 app.use("/api/v1/reviews", reviewRoutes);
 app.use("/api/v1/categories", categoryRoutes);
 app.use("/api/v1/studentCourse", studentCourseRoutes);
@@ -29,7 +31,6 @@ app.use((req, res, next) => {
 });
 
 app.use(errorHandler);
-
 
 const port = process.env.PORT || 3000;
 

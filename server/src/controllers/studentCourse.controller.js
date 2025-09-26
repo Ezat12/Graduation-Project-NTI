@@ -1,6 +1,6 @@
 const asyncHandler = require("express-async-handler");
 const StudentCourse = require("../models/studentCourse");
-const hide = require("../utils/index");
+const ApiError = require("../utils/apiError");
 
 exports.addCourseToStudent = asyncHandler(async (req, res, next) => {
   const { courseId } = req.params;
@@ -26,7 +26,7 @@ exports.getStudentCourses = asyncHandler(async (req, res, next) => {
   const sc = await StudentCourse.find().populate("courses");
 
   if (!sc || sc.length === 0) {
-    throw new hide("No students found", 404);
+    return next(new ApiError("Student not found", 404));
   }
 
   return res.status(200).json(sc);
