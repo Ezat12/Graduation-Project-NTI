@@ -22,7 +22,7 @@ const protectAuth = expressAsyncHandler(async (req, res, next) => {
     return next(new ApiError("User not found", 404));
   }
 
-  if (!currentUser?.active) {
+  if (!currentUser?.isActive) {
     return next(new ApiError("User account is inactive", 403));
   }
   req.user = currentUser;

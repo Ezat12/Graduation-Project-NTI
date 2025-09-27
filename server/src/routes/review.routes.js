@@ -10,7 +10,10 @@ const {
   createReview,
   getAllReviewsToCourse,
   getReviewById,
+  updateReview,
+  deleteReview,
 } = require("../controllers/review.controller");
+const allowedTo = require("../middleware/allowedTo.middleware");
 
 router.post("/:courseId", createReviewValidator, createReview);
 
