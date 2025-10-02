@@ -1,21 +1,34 @@
 const multer = require("multer");
-const path = require("path");
 
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    const uploadDir = path.join(__filename, "../../uploads");
-    cb(null, uploadDir);
+const fileFilter = (req, file, cb) => {
+  const allowedTypes = [
+    "image/jpeg",
+    "image/png",
+    "image/gif",
+    "video/mp4",
+    "video/mpeg",
+  ];
+  if (allowedTypes.includes(file.mimetype)) {
+    cb(null, true);
+  } else {
+    cb(
+      new Error(
+        "Invalid file type. Only images (JPEG, PNG, GIF) and videos (MP4, MPEG) are allowed."
+      ),
+      false
+    );
+  }
+};
+
+const upload = multer({
+  storage: multer.memoryStorage(),
+  limits: {
+    fileSize: 500 * 1024 * 1024,
   },
-  filename: (req, file, cb) => {
-    const uniqueSuffix = Date.now() + "-" + Math.round(Math.random() * 1e9);
-    const fileName = `${uniqueSuffix}.${file.mimetype.split("/")[1]}`;
-    cb(null, fileName);
-  },
+  fileFilter: fileFilter,
 });
 
-const upload = multer({ storage }).fields([
+module.exports = upload.fields([
   { name: "file", maxCount: 1 },
   { name: "files", maxCount: 10 },
 ]);
-
-module.exports = upload;
