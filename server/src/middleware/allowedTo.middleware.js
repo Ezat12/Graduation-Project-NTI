@@ -1,4 +1,5 @@
 const expressAsyncHandler = require("express-async-handler");
+const ApiError = require("../utils/apiError");
 
 const allowedTo = (...allowed) =>
   expressAsyncHandler(async (req, res, next) => {

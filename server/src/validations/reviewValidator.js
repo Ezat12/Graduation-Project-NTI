@@ -1,6 +1,7 @@
 const { body, check } = require("express-validator");
 const validatorError = require("../middleware/errorValidation");
 const Review = require("../models/reviewModel");
+const Course = require("../models/course");
 
 const createReviewValidator = [
   check("courseId")
@@ -11,7 +12,7 @@ const createReviewValidator = [
     .custom(async (value, { req }) => {
       const course = await Course.findById(value);
 
-      if (course) {
+      if (!course) {
         throw new Error("Course not found");
       }
       return true;
@@ -21,7 +22,7 @@ const createReviewValidator = [
   body("rating")
     .notEmpty()
     .withMessage("rating is required")
-    .isInt({ min: 1, max: 5 })
+    .isFloat({ min: 1, max: 5 })
     .withMessage("rating must be between 1 and 5"),
 
   body("comment")
@@ -42,7 +43,7 @@ const updateReviewValidator = [
     .custom(async (value, { req }) => {
       const review = await Review.findById(value);
 
-      if (review) {
+      if (!review) {
         throw new Error("Review not found");
       }
       return true;
@@ -53,7 +54,7 @@ const updateReviewValidator = [
     .optional()
     .notEmpty()
     .withMessage("rating is required")
-    .isInt({ min: 1, max: 5 })
+    .isFloat({ min: 1, max: 5 })
     .withMessage("rating must be between 1 and 5"),
 
   body("comment")
