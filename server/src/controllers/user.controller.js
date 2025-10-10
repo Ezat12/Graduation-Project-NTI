@@ -1,7 +1,37 @@
 const User = require("../models/user.model");
 const expressAsyncHandler = require("express-async-handler");
 const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken")
 const ApiError = require("../utils/apiError");
+
+//added for login
+const loginUser = expressAsyncHandler(async (req, res, next) => {
+  const {email, password} = req.body
+
+  const user = await User.findOne({email}).select("+password")
+  if(!user){
+    return next(new ApiError("invalid email or password", 401))
+  }
+
+  const isMatch = await bcrypt.compare(password, user.password)
+  if(!isMatch){
+    return next(new ApiError("invalid email or password", 401))
+  }
+
+  const token = jwt.sign({userId: user._id}, process.env.SECRET_TOKEN, {expiresIn: "7d"})
+
+  res.status(200).json({
+    status: "success",
+    message: "login successful",
+    token, 
+    user: {
+      _id: user._id,
+      name: user.name,
+      email: user.email, 
+      role: user.role,
+    }
+  })
+})
 
 const createUser = expressAsyncHandler(async (req, res, next) => {
   const { email } = req.body;
@@ -64,4 +94,5 @@ module.exports = {
   getUser,
   updateUser,
   deleteUser,
+  loginUser,
 };

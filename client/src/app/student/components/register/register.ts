@@ -3,19 +3,22 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { InstructorRoutingModule } from "../../../instructor/instructor-routing-module";
+import { Iuser } from '../../modules/iuser';
+import { UserApiServices } from '../../../services/user-api-services';
 
 @Component({
   selector: 'app-register',
+  standalone: true,
   imports: [CommonModule, ReactiveFormsModule, InstructorRoutingModule],
   templateUrl: './register.html',
-  styleUrl: './register.css'
+  styleUrls: ['./register.css']
 })
 export class Register {
   registerForm: FormGroup
 
-  constructor(private fb: FormBuilder, private router: Router){
+  constructor(private fb: FormBuilder, private router: Router, private userService: UserApiServices){
     this.registerForm = this.fb.group({
-      fullName: ['', Validators.required, Validators.minLength(5)],
+      name: ['', [Validators.required, Validators.minLength(5)]],
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(5)]]
     })
@@ -23,13 +26,23 @@ export class Register {
 
   onSubmit() {
     if(this.registerForm.valid) {
-      alert('Account Created Successfully')
-      this.router.navigate(['/login'])
+      const userData: Iuser = this.registerForm.value
+      this.userService.registerUser(userData).subscribe({
+        next: res => {
+          console.log("response: ", res);
+          alert('Account Created Successfully')
+          this.router.navigate(['/login'])          
+        },
+        error: err => {
+          console.error("error: ", err);
+          alert('Something Went Wrong: ' + err.error.message)
+        }
+      })
     }
   }
 
-  get fullName(){
-    return this.registerForm.get('fullName')
+  get name(){
+    return this.registerForm.get('name')
   }
 
   get email(){

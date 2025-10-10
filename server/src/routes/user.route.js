@@ -7,6 +7,7 @@ const {
   getUser,
   updateUser,
   deleteUser,
+  loginUser,
 } = require("../controllers/user.controller");
 const allowedTo = require("../middleware/allowedTo.middleware");
 const protectAuth = require("../middleware/protectAuth.middleware");
@@ -21,5 +22,7 @@ router
   .get(getUser)
   .put(validateUpdatedUser, updateUser)
   .delete(deleteUser);
+  //added for login
+router.post("/login", loginUser)
 
 module.exports = router;

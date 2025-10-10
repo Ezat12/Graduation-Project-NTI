@@ -3,27 +3,52 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { InstructorRoutingModule } from "../../../instructor/instructor-routing-module";
+import { UserApiServices } from '../../../services/user-api-services';
 
 @Component({
   selector: 'app-login',
+  standalone: true,
   imports: [ReactiveFormsModule, CommonModule, FormsModule, InstructorRoutingModule],
   templateUrl: './login.html',
-  styleUrl: './login.css'
+  styleUrls: ['./login.css']
 })
 export class Login {
   loginForm: FormGroup
 
-  constructor(private fb: FormBuilder, private router: Router){
+  constructor(private fb: FormBuilder, private router: Router, private userService: UserApiServices){
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
-      password: ['', Validators.required]
+      password: ['', [Validators.required]]
     })
   }
 
   onSubmit() {
+    console.log('form submitted: ', this.loginForm.value);
+    
     if(this.loginForm.valid){
-      alert('login successful!')
-      this.router.navigate(['/student'])
+      const userData = this.loginForm.value
+
+      this.userService.loginUser(userData).subscribe({
+        next: res => {
+          console.log('login response: ', res);
+          if(res.token){
+            localStorage.setItem('token', res.token)
+            localStorage.setItem('user', JSON.stringify(res.user))
+            alert("Login Successful")
+            this.router.navigate(['/'])
+          } else {
+            alert('Login Failed')
+          }
+        },
+        error: err => {
+          console.error('login error: ', err);
+          alert('Invalid Email or Password')
+          
+        }
+      })
+    } else {
+      console.error('form is invalid');
+      
     }
   }
 
