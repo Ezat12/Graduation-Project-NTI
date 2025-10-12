@@ -58,7 +58,6 @@ export class Courses implements OnInit {
     }).then((result) => {
       if (result.isConfirmed) {
         console.log('Deleting course:', course);
-        // TODO: Implement delete functionality
         this.toastr.success('Course deleted successfully!', 'Success');
       }
     });
@@ -66,12 +65,10 @@ export class Courses implements OnInit {
 
   viewCourse(course: any) {
     console.log('Viewing course:', course);
-    // TODO: Implement view functionality
   }
 
   onImageError(event: any) {
     console.log('Image failed to load:', event.target.src);
-    // Set a default image or placeholder
     event.target.src = '/assets/default-course.jpg';
   }
 

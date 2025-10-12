@@ -8,21 +8,20 @@ import { Instructor } from '../../services/instructor';
   selector: 'app-home',
   imports: [],
   templateUrl: './home.html',
-  styleUrl: './home.css'
+  styleUrl: './home.css',
 })
 export class Home {
   courses: any[] = [];
   // students : number = 0;
-  averageReviews : number = 0;
-  students :any[] = []; 
-  // reviews :any[] = []; 
+  averageReviews: number = 0;
+  students: any[] = [];
+  // reviews :any[] = [];
   constructor(
     private instructor: Instructor,
     private toastr: ToastrService,
     private router: Router,
     private ngZone: NgZone
-  ) {
-  }
+  ) {}
 
   ngOnInit() {
     this.getCourses();
@@ -30,68 +29,63 @@ export class Home {
     this.getAllReview();
   }
 
-  // Common error handler
-  
-private handleError(error: any, context: string) {
-  console.error(`Error in ${context}:`, error);
+  private handleError(error: any, context: string) {
+    console.error(`Error in ${context}:`, error);
 
-  if (error.status === 401) {
-    Swal.fire({
-      icon: 'error',
-      title: 'Session Expired',
-      text: 'Your session has expired. Please login again.',
-      confirmButtonColor: '#ef4444',
-      allowOutsideClick: false
-    }).then(() => {
-      this.ngZone.run(() => {
-        this.router.navigate(['/login']);
+    if (error.status === 401) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Session Expired',
+        text: 'Your session has expired. Please login again.',
+        confirmButtonColor: '#ef4444',
+        allowOutsideClick: false,
+      }).then(() => {
+        this.ngZone.run(() => {
+          this.router.navigate(['/login']);
+        });
       });
-    });
-  } 
-  else if (error.status === 403) {
-    Swal.fire({
-      icon: 'warning',
-      title: 'Access Denied',
-      text: 'You do not have permission to access this resource.',
-      confirmButtonColor: '#f59e0b'
-    }).then(() => {
-      this.ngZone.run(() => {
-        this.router.navigate(['/login']);
+    } else if (error.status === 403) {
+      Swal.fire({
+        icon: 'warning',
+        title: 'Access Denied',
+        text: 'You do not have permission to access this resource.',
+        confirmButtonColor: '#f59e0b',
+      }).then(() => {
+        this.ngZone.run(() => {
+          this.router.navigate(['/login']);
+        });
       });
-    });
-  } 
-  else if (error.status === 500) {
-    Swal.fire({
-      icon: 'error',
-      title: 'Server Error',
-      text: 'Something went wrong. Please try again later.',
-      confirmButtonColor: '#ef4444'
-    }).then(() => {
-      this.ngZone.run(() => {
-        this.router.navigate(['/login']);
+    } else if (error.status === 500) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Server Error',
+        text: 'Something went wrong. Please try again later.',
+        confirmButtonColor: '#ef4444',
+      }).then(() => {
+        this.ngZone.run(() => {
+          this.router.navigate(['/login']);
+        });
       });
-    });
-  } 
-  else {
-    this.toastr.error(`Failed to load ${context}`, 'Error');
+    } else {
+      this.toastr.error(`Failed to load ${context}`, 'Error');
+    }
   }
-}
 
   getCourses() {
     this.instructor.getInstructorCourses().subscribe({
-      next: (data: any) => this.courses = data?.data || [],
-      error: (err) => this.handleError(err, 'courses')
+      next: (data: any) => (this.courses = data?.data || []),
+      error: (err) => this.handleError(err, 'courses'),
     });
   }
 
   getStudents() {
     this.instructor.getStudentToInstructor().subscribe({
-      next : (data : any) => {
-        this.students = data?.data || []; 
-        console.log(this.students)
+      next: (data: any) => {
+        this.students = data?.data || [];
+        console.log(this.students);
       },
-      error : (err : any) => this.handleError(err, 'students')
-    })
+      error: (err: any) => this.handleError(err, 'students'),
+    });
   }
 
   getRecentStudents() {
@@ -104,7 +98,7 @@ private handleError(error: any, context: string) {
     const now = new Date();
     const studentDate = new Date(date);
     const diffInSeconds = Math.floor((now.getTime() - studentDate.getTime()) / 1000);
-    
+
     if (diffInSeconds < 60) {
       return 'Just now';
     } else if (diffInSeconds < 3600) {
@@ -121,7 +115,7 @@ private handleError(error: any, context: string) {
 
   getAllReview() {
     this.instructor.getReviewsInstructor().subscribe({
-      next : (data : any) => {
+      next: (data: any) => {
         if (data?.data && data.data.length > 0) {
           const len: number = data.data.length;
           const sum = data.data.reduce((acc: number, curr: any) => acc + curr.rating, 0);
@@ -131,11 +125,11 @@ private handleError(error: any, context: string) {
           this.averageReviews = 0;
         }
       },
-      error : (err : any) => this.handleError(err, 'reviews')
-    })
+      error: (err: any) => this.handleError(err, 'reviews'),
+    });
   }
 
-  handleTime(date : string) {
-    this.instructor.getTimeSince(date)
-  } 
+  handleTime(date: string) {
+    this.instructor.getTimeSince(date);
+  }
 }

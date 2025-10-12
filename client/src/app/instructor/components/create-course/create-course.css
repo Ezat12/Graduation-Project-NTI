@@ -1,526 +1,509 @@
 .create-course-container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 2rem;
-    background: #f8fafc;
-    min-height: 100vh;
-  }
-  
-  /* Header Section */
-  .header-section {
-    margin-bottom: 2rem;
-  }
-  
-  .header-content {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-  }
-  
-  .back-btn {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    color: #6b7280;
-    background: none;
-    border: none;
-    font-size: 0.875rem;
-    font-weight: 500;
-    cursor: pointer;
-    transition: color 0.2s;
-    width: fit-content;
-  }
-  
-  .back-btn:hover {
-    color: #374151;
-  }
-  
-  .page-title {
-    font-size: 2.25rem;
-    font-weight: 700;
-    color: #1f2937;
-    margin: 0;
-  }
-  
-  .page-subtitle {
-    font-size: 1.125rem;
-    color: #6b7280;
-    margin: 0;
-  }
-  
-  /* Form Container */
-  .form-container {
-    background: white;
-    border-radius: 0.75rem;
-    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
-    overflow: hidden;
-  }
-  
-  .course-form {
-    padding: 2rem;
-  }
-  
-  /* Messages */
-  .message {
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-    padding: 1rem;
-    border-radius: 0.5rem;
-    margin-bottom: 1.5rem;
-    font-weight: 500;
-  }
-  
-  .success-message {
-    background-color: #d1fae5;
-    color: #065f46;
-    border: 1px solid #a7f3d0;
-  }
-  
-  .error-message {
-    background-color: #fee2e2;
-    color: #991b1b;
-    border: 1px solid #fecaca;
-  }
-  
-  .error-text {
-    color: #dc2626;
-    font-size: 0.875rem;
-    margin-top: 0.25rem;
-  }
-  
-  /* Form Sections */
-  .form-section {
-    margin-bottom: 2rem;
-  }
-  
-  .section-title {
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-    font-size: 1.25rem;
-    font-weight: 600;
-    color: #1f2937;
-    margin-bottom: 1.5rem;
-    padding-bottom: 0.75rem;
-    border-bottom: 2px solid #e5e7eb;
-  }
-  
-  /* Form Grid */
-  .form-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 1.5rem;
-  }
-  
-  .form-group {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-  }
-  
-  .form-group.full-width {
-    grid-column: 1 / -1;
-  }
-  
-  /* Form Labels */
-  .form-label {
-    font-size: 0.875rem;
-    font-weight: 600;
-    color: #374151;
-    margin-bottom: 0.25rem;
-  }
-  
-  .form-hint {
-    color: #6b7280;
-    font-size: 0.75rem;
-    margin-top: 0.25rem;
-  }
-  
-  /* Form Inputs */
-  .form-input,
-  .form-textarea,
-  .form-select {
-    padding: 0.75rem 1rem;
-    border: 2px solid #e5e7eb;
-    border-radius: 0.5rem;
-    font-size: 1rem;
-    transition: all 0.2s;
-    background: white;
-  }
-  
-  .form-input:focus,
-  .form-textarea:focus,
-  .form-select:focus {
-    outline: none;
-    border-color: #3b82f6;
-    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
-  }
-  
-  .form-input::placeholder,
-  .form-textarea::placeholder {
-    color: #9ca3af;
-  }
-  
-  .form-textarea {
-    resize: vertical;
-    min-height: 100px;
-  }
-  
-  .form-select {
-    cursor: pointer;
-  }
-  
-  /* Objectives */
-  .objectives-container {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-  }
-  
-  .objective-item {
-    display: flex;
-    gap: 0.5rem;
-    align-items: center;
-  }
-  
-  .objective-item .form-input {
-    flex: 1;
-  }
-  
-  .remove-btn {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 2.5rem;
-    height: 2.5rem;
-    border: none;
-    background: #fee2e2;
-    color: #dc2626;
-    border-radius: 0.375rem;
-    cursor: pointer;
-    transition: all 0.2s;
-  }
-  
-  .remove-btn:hover {
-    background: #fecaca;
-  }
-  
-  /* Lectures */
-  .lectures-container {
-    display: flex;
-    flex-direction: column;
-    gap: 2rem;
-  }
-  
-  .lecture-item {
-    padding: 1.5rem;
-    border: 2px solid #e5e7eb;
-    border-radius: 0.75rem;
-    background: #f9fafb;
-  }
-  
-  .lecture-title {
-    font-size: 1.125rem;
-    font-weight: 600;
-    color: #1f2937;
-    margin-bottom: 1rem;
-    padding-bottom: 0.5rem;
-    border-bottom: 1px solid #e5e7eb;
-  }
-  
-  /* Checkbox */
- /* في ملف CSS */
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+  background: #f8fafc;
+  min-height: 100vh;
+}
+
+.header-section {
+  margin-bottom: 2rem;
+}
+
+.header-content {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.back-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: #6b7280;
+  background: none;
+  border: none;
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: color 0.2s;
+  width: fit-content;
+}
+
+.back-btn:hover {
+  color: #374151;
+}
+
+.page-title {
+  font-size: 2.25rem;
+  font-weight: 700;
+  color: #1f2937;
+  margin: 0;
+}
+
+.page-subtitle {
+  font-size: 1.125rem;
+  color: #6b7280;
+  margin: 0;
+}
+
+.form-container {
+  background: white;
+  border-radius: 0.75rem;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+  overflow: hidden;
+}
+
+.course-form {
+  padding: 2rem;
+}
+
+.message {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 1rem;
+  border-radius: 0.5rem;
+  margin-bottom: 1.5rem;
+  font-weight: 500;
+}
+
+.success-message {
+  background-color: #d1fae5;
+  color: #065f46;
+  border: 1px solid #a7f3d0;
+}
+
+.error-message {
+  background-color: #fee2e2;
+  color: #991b1b;
+  border: 1px solid #fecaca;
+}
+
+.error-text {
+  color: #dc2626;
+  font-size: 0.875rem;
+  margin-top: 0.25rem;
+}
+
+.form-section {
+  margin-bottom: 2rem;
+}
+
+.section-title {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #1f2937;
+  margin-bottom: 1.5rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 2px solid #e5e7eb;
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1.5rem;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.form-group.full-width {
+  grid-column: 1 / -1;
+}
+
+.form-label {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #374151;
+  margin-bottom: 0.25rem;
+}
+
+.form-hint {
+  color: #6b7280;
+  font-size: 0.75rem;
+  margin-top: 0.25rem;
+}
+
+.form-input,
+.form-textarea,
+.form-select {
+  padding: 0.75rem 1rem;
+  border: 2px solid #e5e7eb;
+  border-radius: 0.5rem;
+  font-size: 1rem;
+  transition: all 0.2s;
+  background: white;
+}
+
+.form-input:focus,
+.form-textarea:focus,
+.form-select:focus {
+  outline: none;
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.form-input::placeholder,
+.form-textarea::placeholder {
+  color: #9ca3af;
+}
+
+.form-textarea {
+  resize: vertical;
+  min-height: 100px;
+}
+
+.form-select {
+  cursor: pointer;
+}
+
+.objectives-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.objective-item {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.objective-item .form-input {
+  flex: 1;
+}
+
+.remove-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  border: none;
+  background: #fee2e2;
+  color: #dc2626;
+  border-radius: 0.375rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.remove-btn:hover {
+  background: #fecaca;
+}
+
+.lectures-container {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.lecture-item {
+  padding: 1.5rem;
+  border: 2px solid #e5e7eb;
+  border-radius: 0.75rem;
+  background: #f9fafb;
+}
+
+.lecture-title {
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: #1f2937;
+  margin-bottom: 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid #e5e7eb;
+}
+
 .checkbox-label {
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-    cursor: pointer;
-    font-size: 0.875rem;
-    font-weight: 500;
-    color: #374151;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  cursor: pointer;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #374151;
+}
+
+.checkbox-input {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.checkbox-custom {
+  width: 1.25rem;
+  height: 1.25rem;
+  border: 2px solid #d1d5db;
+  border-radius: 0.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+  background: white;
+}
+
+.checkbox-input:checked + .checkbox-custom {
+  background-color: #3b82f6;
+  border-color: #3b82f6;
+}
+
+.checkbox-input:checked + .checkbox-custom::after {
+  content: '✓';
+  color: white;
+  font-size: 0.75rem;
+  font-weight: bold;
+}
+
+.checkbox-input:focus + .checkbox-custom {
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+  padding-top: 2rem;
+  border-top: 1px solid #e5e7eb;
+  margin-top: 2rem;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.5rem;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  border: none;
+  text-decoration: none;
+}
+
+.btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.btn-primary {
+  background-color: #3b82f6;
+  color: white;
+}
+
+.btn-primary:hover:not(:disabled) {
+  background-color: #2563eb;
+}
+
+.btn-secondary {
+  background-color: #6b7280;
+  color: white;
+}
+
+.btn-secondary:hover:not(:disabled) {
+  background-color: #4b5563;
+}
+
+.btn-danger {
+  background-color: #dc2626;
+  color: white;
+}
+
+.btn-danger:hover:not(:disabled) {
+  background-color: #b91c1c;
+}
+
+.btn-outline {
+  background-color: transparent;
+  color: #3b82f6;
+  border: 2px solid #3b82f6;
+}
+
+.btn-outline:hover:not(:disabled) {
+  background-color: #3b82f6;
+  color: white;
+}
+
+.btn.full-width {
+  width: 100%;
+  justify-content: center;
+}
+
+.file-preview {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.5rem;
+  background: #f0f9ff;
+  border: 1px solid #bae6fd;
+  border-radius: 0.375rem;
+  margin-top: 0.5rem;
+}
+
+.file-name {
+  font-size: 0.875rem;
+  color: #0369a1;
+  font-weight: 500;
+}
+
+.remove-file-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.5rem;
+  height: 1.5rem;
+  border: none;
+  background: #fecaca;
+  color: #dc2626;
+  border-radius: 0.25rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.remove-file-btn:hover {
+  background: #fca5a5;
+}
+
+.checkbox-label {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  cursor: pointer;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #374151;
+}
+
+.checkbox-input {
+  width: 1.25rem;
+  height: 1.25rem;
+  border: 2px solid #d1d5db;
+  border-radius: 0.25rem;
+  cursor: pointer;
+}
+
+.mt-4 {
+  margin-top: 1rem;
+}
+
+.upload-status {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem;
+  background: #f0f9ff;
+  border: 1px solid #bae6fd;
+  border-radius: 0.375rem;
+  margin-top: 0.5rem;
+}
+
+.upload-spinner {
+  width: 1rem;
+  height: 1rem;
+  border: 2px solid #e5e7eb;
+  border-top: 2px solid #3b82f6;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+.upload-text {
+  font-size: 0.875rem;
+  color: #0369a1;
+  font-weight: 500;
+}
+
+.upload-success {
+  font-size: 0.75rem;
+  color: #059669;
+  font-weight: 600;
+  background: #d1fae5;
+  padding: 0.25rem 0.5rem;
+  border-radius: 0.25rem;
+}
+
+.file-preview.success {
+  background: #f0f9ff;
+  border-color: #34d399;
+}
+
+.form-input:disabled {
+  background-color: #f9fafb;
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
   }
-  
-  .checkbox-input {
-    /* إخفاء الـ checkbox الأصلي */
-    position: absolute;
-    opacity: 0;
-    width: 0;
-    height: 0;
+  100% {
+    transform: rotate(360deg);
   }
-  
-  .checkbox-custom {
-    width: 1.25rem;
-    height: 1.25rem;
-    border: 2px solid #d1d5db;
-    border-radius: 0.25rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: all 0.2s;
-    background: white;
+}
+
+@media (max-width: 768px) {
+  .create-course-container {
+    padding: 1rem;
   }
-  
-  .checkbox-input:checked + .checkbox-custom {
-    background-color: #3b82f6;
-    border-color: #3b82f6;
+
+  .course-form {
+    padding: 1.5rem;
   }
-  
-  .checkbox-input:checked + .checkbox-custom::after {
-    content: '✓';
-    color: white;
-    font-size: 0.75rem;
-    font-weight: bold;
+
+  .form-grid {
+    grid-template-columns: 1fr;
   }
-  
-  .checkbox-input:focus + .checkbox-custom {
-    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+
+  .page-title {
+    font-size: 1.875rem;
   }
-  
-  /* Buttons */
+
   .form-actions {
-    display: flex;
-    justify-content: flex-end;
-    gap: 1rem;
-    padding-top: 2rem;
-    border-top: 1px solid #e5e7eb;
-    margin-top: 2rem;
+    flex-direction: column;
   }
-  
+
   .btn {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    padding: 0.75rem 1.5rem;
-    border-radius: 0.5rem;
-    font-size: 1rem;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.2s;
-    border: none;
-    text-decoration: none;
-  }
-  
-  .btn:disabled {
-    opacity: 0.5;
-    cursor: not-allowed;
-  }
-  
-  .btn-primary {
-    background-color: #3b82f6;
-    color: white;
-  }
-  
-  .btn-primary:hover:not(:disabled) {
-    background-color: #2563eb;
-  }
-  
-  .btn-secondary {
-    background-color: #6b7280;
-    color: white;
-  }
-  
-  .btn-secondary:hover:not(:disabled) {
-    background-color: #4b5563;
-  }
-  
-  .btn-danger {
-    background-color: #dc2626;
-    color: white;
-  }
-  
-  .btn-danger:hover:not(:disabled) {
-    background-color: #b91c1c;
-  }
-  
-  .btn-outline {
-    background-color: transparent;
-    color: #3b82f6;
-    border: 2px solid #3b82f6;
-  }
-  
-  .btn-outline:hover:not(:disabled) {
-    background-color: #3b82f6;
-    color: white;
-  }
-  
-  .btn.full-width {
     width: 100%;
     justify-content: center;
   }
 
-  /* File Preview Styles */
-.file-preview {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 0.5rem;
-    background: #f0f9ff;
-    border: 1px solid #bae6fd;
-    border-radius: 0.375rem;
-    margin-top: 0.5rem;
-  }
-  
-  .file-name {
-    font-size: 0.875rem;
-    color: #0369a1;
-    font-weight: 500;
-  }
-  
-  .remove-file-btn {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 1.5rem;
-    height: 1.5rem;
-    border: none;
-    background: #fecaca;
-    color: #dc2626;
-    border-radius: 0.25rem;
-    cursor: pointer;
-    transition: all 0.2s;
-  }
-  
-  .remove-file-btn:hover {
-    background: #fca5a5;
-  }
-  
-  /* Checkbox Styles */
-  .checkbox-label {
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-    cursor: pointer;
-    font-size: 0.875rem;
-    font-weight: 500;
-    color: #374151;
-  }
-  
-  .checkbox-input {
-    width: 1.25rem;
-    height: 1.25rem;
-    border: 2px solid #d1d5db;
-    border-radius: 0.25rem;
-    cursor: pointer;
-  }
-  
-  /* Margin utility */
-  .mt-4 {
-    margin-top: 1rem;
-  }
-  
-  /* Upload Status Styles */
-.upload-status {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    padding: 0.75rem;
-    background: #f0f9ff;
-    border: 1px solid #bae6fd;
-    border-radius: 0.375rem;
-    margin-top: 0.5rem;
-  }
-  
-  .upload-spinner {
-    width: 1rem;
-    height: 1rem;
-    border: 2px solid #e5e7eb;
-    border-top: 2px solid #3b82f6;
-    border-radius: 50%;
-    animation: spin 1s linear infinite;
-  }
-  
-  .upload-text {
-    font-size: 0.875rem;
-    color: #0369a1;
-    font-weight: 500;
-  }
-  
-  .upload-success {
-    font-size: 0.75rem;
-    color: #059669;
-    font-weight: 600;
-    background: #d1fae5;
-    padding: 0.25rem 0.5rem;
-    border-radius: 0.25rem;
-  }
-  
-  .file-preview.success {
-    background: #f0f9ff;
-    border-color: #34d399;
-  }
-  
-  /* Disable file input during upload */
-  .form-input:disabled {
-    background-color: #f9fafb;
-    cursor: not-allowed;
-    opacity: 0.6;
-  }
-  
-  /* Loading Animation */
-  @keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
+  .objective-item {
+    flex-direction: column;
+    align-items: stretch;
   }
 
-  /* Responsive Design */
-  @media (max-width: 768px) {
-    .create-course-container {
-      padding: 1rem;
-    }
-  
-    .course-form {
-      padding: 1.5rem;
-    }
-  
-    .form-grid {
-      grid-template-columns: 1fr;
-    }
-  
-    .page-title {
-      font-size: 1.875rem;
-    }
-  
-    .form-actions {
-      flex-direction: column;
-    }
-  
-    .btn {
-      width: 100%;
-      justify-content: center;
-    }
-  
-    .objective-item {
-      flex-direction: column;
-      align-items: stretch;
-    }
-  
-    .remove-btn {
-      align-self: flex-end;
-      width: auto;
-      padding: 0.5rem 1rem;
-    }
+  .remove-btn {
+    align-self: flex-end;
+    width: auto;
+    padding: 0.5rem 1rem;
   }
-  
-  @media (max-width: 480px) {
-    .create-course-container {
-      padding: 0.5rem;
-    }
-  
-    .course-form {
-      padding: 1rem;
-    }
-  
-    .page-title {
-      font-size: 1.5rem;
-    }
-  
-    .lecture-item {
-      padding: 1rem;
-    }
+}
+
+@media (max-width: 480px) {
+  .create-course-container {
+    padding: 0.5rem;
   }
-  
-/* Categories Styles */
+
+  .course-form {
+    padding: 1rem;
+  }
+
+  .page-title {
+    font-size: 1.5rem;
+  }
+
+  .lecture-item {
+    padding: 1rem;
+  }
+}
+
 .loading-categories {
   display: flex;
   align-items: center;
@@ -597,7 +580,6 @@
   color: #9ca3af;
 }
 
-/* Loading Animation */
 @keyframes spin {
   to {
     transform: rotate(360deg);

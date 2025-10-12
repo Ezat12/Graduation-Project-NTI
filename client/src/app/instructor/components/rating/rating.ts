@@ -53,15 +53,14 @@ export class Rating implements OnInit {
   }
 
   applyFilter() {
-    // Filter reviews based on selected course
     if (this.selectedCourseId) {
-      this.filteredReviews = this.reviews.filter(review => 
+      this.filteredReviews = this.reviews.filter(review =>
         review.courseId._id === this.selectedCourseId
       );
     } else {
       this.filteredReviews = [...this.reviews];
     }
-    
+
     this.calculateRatingStats();
   }
 
@@ -82,17 +81,14 @@ export class Rating implements OnInit {
       return;
     }
 
-    // Calculate average
     const sum = this.filteredReviews.reduce((acc: number, curr: any) => acc + curr.rating, 0);
     this.average = Math.round((sum / this.filteredReviews.length) * 10) / 10;
 
-    // Calculate distribution
     this.ratingDistribution = { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 };
     this.filteredReviews.forEach(review => {
       this.ratingDistribution[review.rating]++;
     });
 
-    // Calculate percentages
     Object.keys(this.ratingDistribution).forEach(rating => {
       const ratingNum = parseInt(rating);
       this.ratingPercentages[ratingNum] = Math.round((this.ratingDistribution[ratingNum] / this.filteredReviews.length) * 100);
@@ -122,7 +118,7 @@ export class Rating implements OnInit {
 
   getAvatarColor(name: string): string {
     const colors = [
-      '#3B82F6', '#10B981', '#F59E0B', '#EF4444', '#8B5CF6', 
+      '#3B82F6', '#10B981', '#F59E0B', '#EF4444', '#8B5CF6',
       '#06B6D4', '#84CC16', '#F97316', '#EC4899', '#6366F1'
     ];
     const index = name.charCodeAt(0) % colors.length;

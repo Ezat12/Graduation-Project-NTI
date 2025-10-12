@@ -20,12 +20,10 @@ export class Setting implements OnInit {
   updateMessage: string = '';
   passwordMessage: string = '';
 
-  // Form data for updates
   updateForm = {
     name: ''
   };
 
-  // Password form data
   passwordForm = {
     currentPassword: '',
     newPassword: '',
@@ -72,18 +70,16 @@ export class Setting implements OnInit {
       next: (updatedUser) => {
         this.dataUser = updatedUser;
         this.isUpdating = false;
-        
+
         this.toastr.success('Name updated successfully!', 'Success');
       },
       error: (error) => {
         console.log("Error updating profile:", error);
         console.log("Error status:", error.status);
         console.log("Error body:", error.error);
-        
-        // Handle different types of errors
+
         let errorMessage = 'Failed to update name. Please try again.';
-        
-        // Check for HTTP error response
+
         if (error.status === 400) {
           if (error.error?.message) {
             errorMessage = error.error.message;
@@ -105,14 +101,14 @@ export class Setting implements OnInit {
         } else if (error.message) {
           errorMessage = error.message;
         }
-        
+
         Swal.fire({
           icon: 'error',
           title: 'Error',
           text: errorMessage,
           confirmButtonColor: '#ef4444'
         });
-        
+
         this.isUpdating = false;
       }
     });
@@ -133,24 +129,22 @@ export class Setting implements OnInit {
     }).subscribe({
       next: (response) => {
         this.isChangingPassword = false;
-        
-        // Clear form
+
         this.passwordForm = {
           currentPassword: '',
           newPassword: '',
           confirmPassword: ''
         };
-        
+
         this.toastr.success('Password changed successfully!', 'Success');
       },
       error: (error) => {
         console.log("Error changing password:", error);
         console.log("Error status:", error.status);
         console.log("Error body:", error.error);
-        
-        // Handle different types of errors
+
         let errorMessage = 'Failed to change password. Please try again.';
-        
+
         // Check for HTTP error response
         if (error.status === 400) {
           if (error.error?.message) {
@@ -173,14 +167,14 @@ export class Setting implements OnInit {
         } else if (error.message) {
           errorMessage = error.message;
         }
-        
+
         Swal.fire({
           icon: 'error',
           title: 'Error',
           text: errorMessage,
           confirmButtonColor: '#ef4444'
         });
-        
+
         this.isChangingPassword = false;
       }
     });
@@ -200,10 +194,10 @@ export class Setting implements OnInit {
 
   getFormattedDate(dateString: string): string {
     const date = new Date(dateString);
-    return date.toLocaleDateString('en-US', { 
-      year: 'numeric', 
-      month: 'long', 
-      day: 'numeric' 
+    return date.toLocaleDateString('en-US', {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric'
     });
   }
 }

@@ -81,7 +81,6 @@ export class Instructor {
 
     return this.http.post(`${this.baseUrl}/courses`, courseData, { headers }).pipe(
       tap((res: any) => {
-        // Clear cache after creating new course
         this.coursesCache = null;
       })
     );

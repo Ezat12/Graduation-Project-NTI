@@ -76,7 +76,6 @@ export class CreateCourse implements OnInit {
     this.instructorService.getAllCategory().subscribe({
       next: (response: any) => {
         console.log('Categories response:', response);
-        // Handle different response structures
         if (Array.isArray(response)) {
           this.categories = response;
         } else if (response && response.data && Array.isArray(response.data)) {
@@ -97,14 +96,13 @@ export class CreateCourse implements OnInit {
     });
   }
 
-  // اختيار صورة الكورس
   onImageSelected(event: any) {
     const file = event.target.files[0];
     if (file) {
       this.courseImageFile = file;
       this.uploadingImage = true;
       this.errorMessage = '';
-      
+
       this.instructorService.uploadFileSingle(file).subscribe({
         next: (data: any) => {
           this.courseForm.imageUrl = data.data.url;
@@ -131,14 +129,13 @@ export class CreateCourse implements OnInit {
     }
   }
 
-  // اختيار فيديو المحاضرة
   onVideoSelected(event: any, index: number) {
     const file = event.target.files[0];
     if (file) {
       this.courseForm.lectures[index].videoFile = file;
       this.courseForm.lectures[index].uploadingVideo = true;
       this.errorMessage = '';
-      
+
       this.instructorService.uploadFileSingle(file).subscribe({
         next: (data: any) => {
           this.courseForm.lectures[index].videoUrl = data.data.url;
@@ -155,7 +152,6 @@ export class CreateCourse implements OnInit {
     }
   }
 
-  // إزالة فيديو المحاضرة
   removeVideo(index: number) {
     this.courseForm.lectures[index].videoFile = undefined;
     this.courseForm.lectures[index].videoUrl = '';
@@ -166,17 +162,14 @@ export class CreateCourse implements OnInit {
     }
   }
 
-  // إضافة هدف جديد
   addObjective() {
     this.courseForm.objective.push('');
   }
 
-  // إزالة هدف
   removeObjective(index: number) {
     this.courseForm.objective.splice(index, 1);
   }
 
-  // إضافة محاضرة جديدة
   addLecture() {
     this.courseForm.lectures.push({
       title: '',
@@ -185,16 +178,13 @@ export class CreateCourse implements OnInit {
     });
   }
 
-  // إزالة محاضرة
   removeLecture(index: number) {
     this.courseForm.lectures.splice(index, 1);
   }
 
-  // التحقق من صحة النموذج
   validateForm(): boolean {
     this.submitted = true;
 
-    // التحقق من الحقول الأساسية
     if (!this.courseForm.title.trim() || this.courseForm.title.length < 4) {
       this.errorMessage = 'Title is required and must be at least 4 characters';
       return false;
@@ -225,7 +215,6 @@ export class CreateCourse implements OnInit {
       return false;
     }
 
-    // التحقق من المحاضرات
     if (this.courseForm.lectures.length === 0) {
       this.errorMessage = 'At least one lecture is required';
       return false;
@@ -233,7 +222,7 @@ export class CreateCourse implements OnInit {
 
     for (let i = 0; i < this.courseForm.lectures.length; i++) {
       const lecture = this.courseForm.lectures[i];
-      
+
       if (!lecture.title.trim() || lecture.title.length < 4) {
         this.errorMessage = `Lecture ${i + 1}: Title is required and must be at least 4 characters`;
         return false;
@@ -263,12 +252,11 @@ export class CreateCourse implements OnInit {
       this.toastr.error(this.errorMessage, 'Validation Error');
       return;
     }
-  
+
     this.isCreating = true;
     this.errorMessage = '';
     this.successMessage = '';
-  
-    // تحضير بيانات الكورس
+
     const courseData = {
       title: this.courseForm.title.trim(),
       description: this.courseForm.description.trim(),
@@ -288,13 +276,12 @@ export class CreateCourse implements OnInit {
 
     console.log('Course data being sent:', courseData);
     console.log('Categories array:', this.courseForm.category);
-  
-    // إرسال بيانات الكورس
+
     this.instructorService.createCourse(courseData).subscribe({
       next: (response) => {
         this.isCreating = false;
         this.submitted = false;
-        
+
         Swal.fire({
           icon: 'success',
           title: 'Success!',
@@ -310,9 +297,9 @@ export class CreateCourse implements OnInit {
         console.log("Error creating course:", error);
         console.log("Error status:", error.status);
         console.log("Error body:", error.error);
-        
+
         let errorMessage = 'Failed to create course. Please try again.';
-        
+
         if (error.status === 400) {
           if (error.error?.message) {
             errorMessage = error.error.message;
@@ -326,20 +313,19 @@ export class CreateCourse implements OnInit {
         } else if (error.status === 500) {
           errorMessage = 'Server error. Please try again later.';
         }
-        
+
         Swal.fire({
           icon: 'error',
           title: 'Error',
           text: errorMessage,
           confirmButtonColor: '#ef4444'
         });
-        
+
         this.isCreating = false;
       }
     });
   }
 
-  // Category management
   toggleCategory(categoryId: string) {
     const index = this.courseForm.category.indexOf(categoryId);
     if (index > -1) {
@@ -355,7 +341,6 @@ export class CreateCourse implements OnInit {
     return this.courseForm.category.includes(categoryId);
   }
 
-  // Check if any lecture is uploading
   isAnyLectureUploading(): boolean {
     return (this.courseForm.lectures || []).some(lecture => lecture.uploadingVideo);
   }
