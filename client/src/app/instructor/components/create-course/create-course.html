@@ -1,0 +1,407 @@
+<div class="create-course-container">
+  <!-- Header Section -->
+  <div class="header-section">
+    <div class="header-content">
+      <button (click)="cancel()" class="back-btn">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+        </svg>
+        Back to Courses
+      </button>
+      <h1 class="page-title">Create New Course</h1>
+      <p class="page-subtitle">Fill in the details to create your new course</p>
+    </div>
+  </div>
+
+  <!-- Form Section -->
+  <div class="form-container">
+    <form (ngSubmit)="createCourse()" class="course-form" enctype="multipart/form-data">
+      
+      <!-- Success Message -->
+      @if (successMessage) {
+        <div class="message success-message">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+          </svg>
+          {{ successMessage }}
+        </div>
+      }
+
+      <!-- Error Message -->
+      @if (errorMessage) {
+        <div class="message error-message">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+          </svg>
+          {{ errorMessage }}
+        </div>
+      }
+
+      <!-- Basic Information Section -->
+      <div class="form-section">
+        <h3 class="section-title">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+          </svg>
+          Basic Information
+        </h3>
+        
+        <div class="form-grid">
+          <div class="form-group full-width">
+            <label for="title" class="form-label">Course Title *</label>
+            <input
+              type="text"
+              id="title"
+              [(ngModel)]="courseForm.title"
+              name="title"
+              class="form-input"
+              placeholder="Enter course title"
+              required
+              minlength="4"
+            />
+            @if (submitted && !courseForm.title.trim()) {
+              <div class="error-text">Title is required</div>
+            }
+            @if (submitted && courseForm.title.length < 4) {
+              <div class="error-text">Title must be at least 4 characters</div>
+            }
+          </div>
+
+          <div class="form-group full-width">
+            <label for="description" class="form-label">Course Description *</label>
+            <textarea
+              id="description"
+              [(ngModel)]="courseForm.description"
+              name="description"
+              class="form-textarea"
+              placeholder="Describe what students will learn in this course"
+              rows="4"
+              required
+            ></textarea>
+            @if (submitted && !courseForm.description.trim()) {
+              <div class="error-text">Description is required</div>
+            }
+          </div>
+
+          <div class="form-group">
+            <label for="price" class="form-label">Price ($) *</label>
+            <input
+              type="number"
+              id="price"
+              [(ngModel)]="courseForm.price"
+              name="price"
+              class="form-input"
+              placeholder="0"
+              min="0"
+              step="0.01"
+              required
+            />
+            @if (submitted && courseForm.price === null) {
+              <div class="error-text">Price is required</div>
+            }
+            @if (submitted && courseForm.price < 0) {
+              <div class="error-text">Price cannot be negative</div>
+            }
+          </div>
+
+          <div class="form-group">
+            <label for="level" class="form-label">Level *</label>
+            <select
+              id="level"
+              [(ngModel)]="courseForm.level"
+              name="level"
+              class="form-select"
+              required
+            >
+              <option value="">Select Level</option>
+              <option value="Beginner">Beginner</option>
+              <option value="Intermediate">Intermediate</option>
+              <option value="Advanced">Advanced</option>
+              <option value="All levels">All levels</option>
+            </select>
+            @if (submitted && !courseForm.level) {
+              <div class="error-text">Level is required</div>
+            }
+          </div>
+
+          <div class="form-group">
+            <label for="language" class="form-label">Language</label>
+            <select
+              id="language"
+              [(ngModel)]="courseForm.language"
+              name="language"
+              class="form-select"
+              multiple
+            >
+              <option value="English">English</option>
+              <option value="Arabic">Arabic</option>
+              <option value="Spanish">Spanish</option>
+              <option value="French">French</option>
+            </select>
+            <small class="form-hint">Hold Ctrl/Cmd to select multiple languages</small>
+          </div>
+
+          <!-- Course Image Upload -->
+          <div class="form-group full-width">
+            <label for="courseImage" class="form-label">Course Image *</label>
+            <input
+              type="file"
+              id="courseImage"
+              (change)="onImageSelected($event)"
+              accept="image/*"
+              class="form-input"
+              required
+              [disabled]="uploadingImage"
+            />
+            
+            <!-- حالة التحميل للصورة -->
+            @if (uploadingImage) {
+              <div class="upload-status">
+                <div class="upload-spinner"></div>
+                <span class="upload-text">Uploading image...</span>
+              </div>
+            }
+            
+            @if (courseImageFile && !uploadingImage) {
+              <div class="file-preview success">
+                <span class="file-name">{{ courseImageFile.name }}</span>
+                <span class="upload-success">✓ Uploaded</span>
+                <button type="button" (click)="removeImage()" class="remove-file-btn">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                  </svg>
+                </button>
+              </div>
+            }
+            
+            @if (submitted && (!courseImageFile || !courseForm.imageUrl)) {
+              <div class="error-text">Course image is required</div>
+            }
+          </div>
+        </div>
+      </div>
+
+      <!-- Course Categories Section -->
+      <div class="form-section">
+        <h3 class="section-title">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path>
+          </svg>
+          Course Categories
+        </h3>
+        
+        @if (isLoadingCategories) {
+          <div class="loading-categories">
+            <div class="loading-spinner"></div>
+            <span>Loading categories...</span>
+          </div>
+        } @else {
+          <div class="categories-grid">
+            @for (category of (categories || []); track category._id) {
+              <div class="category-item" [class.selected]="isCategorySelected(category._id)">
+                <label class="category-checkbox">
+                  <input
+                    type="checkbox"
+                    [checked]="isCategorySelected(category._id)"
+                    (change)="toggleCategory(category._id)"
+                    class="category-input"
+                  />
+                  <span class="category-name">{{ category.name }}</span>
+                </label>
+                @if (category.description) {
+                  <p class="category-description">{{ category.description }}</p>
+                }
+              </div>
+            }
+          </div>
+          
+          @if ((categories || []).length === 0) {
+            <div class="no-categories">
+              <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path>
+              </svg>
+              <p>No categories available</p>
+            </div>
+          }
+        }
+        
+        @if (submitted && courseForm.category.length === 0) {
+          <div class="error-text">At least one category is required</div>
+        }
+      </div>
+
+      <!-- Course Objectives Section -->
+      <div class="form-section">
+        <h3 class="section-title">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path>
+          </svg>
+          Course Objectives
+        </h3>
+        
+        <div class="form-group full-width">
+          <label for="objectives" class="form-label">Learning Objectives</label>
+          <div class="objectives-container">
+            @for (objective of courseForm.objective; track $index) {
+              <div class="objective-item">
+                <input
+                  type="text"
+                  [(ngModel)]="courseForm.objective[$index]"
+                  [name]="'objective_' + $index"
+                  class="form-input"
+                  placeholder="Enter a learning objective"
+                />
+                <button type="button" (click)="removeObjective($index)" class="remove-btn">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                  </svg>
+                </button>
+              </div>
+            }
+            <button type="button" (click)="addObjective()" class="btn btn-outline">
+              <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+              </svg>
+              Add Objective
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Lectures Section -->
+      <div class="form-section">
+        <h3 class="section-title">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"></path>
+          </svg>
+          Course Lectures
+        </h3>
+        
+        <div class="lectures-container">
+          @for (lecture of courseForm.lectures; track $index) {
+            <div class="lecture-item">
+              <h4 class="lecture-title">Lecture {{$index + 1}}</h4>
+              
+              <div class="form-grid">
+                <div class="form-group full-width">
+                  <label [for]="'lectureTitle_' + $index" class="form-label">Lecture Title *</label>
+                  <input
+                    type="text"
+                    [id]="'lectureTitle_' + $index"
+                    [(ngModel)]="lecture.title"
+                    [name]="'lectureTitle_' + $index"
+                    class="form-input"
+                    placeholder="Enter lecture title"
+                    required
+                    minlength="4"
+                  />
+                  @if (submitted && !lecture.title.trim()) {
+                    <div class="error-text">Lecture title is required</div>
+                  }
+                  @if (submitted && lecture.title && lecture.title.length < 4) {
+                    <div class="error-text">Lecture title must be at least 4 characters</div>
+                  }
+                </div>
+
+                <!-- Video Upload for Lecture -->
+                <div class="form-group full-width">
+                  <label [for]="'lectureVideo_' + $index" class="form-label">Lecture Video *</label>
+                  <input
+                    type="file"
+                    [id]="'lectureVideo_' + $index"
+                    (change)="onVideoSelected($event, $index)"
+                    accept="video/*"
+                    class="form-input"
+                    required
+                    [disabled]="lecture.uploadingVideo"
+                  />
+                  
+                  <!-- حالة التحميل للفيديو -->
+                  @if (lecture.uploadingVideo) {
+                    <div class="upload-status">
+                      <div class="upload-spinner"></div>
+                      <span class="upload-text">Uploading video...</span>
+                    </div>
+                  }
+                  
+                  @if (lecture.videoFile && !lecture.uploadingVideo) {
+                    <div class="file-preview success">
+                      <span class="file-name">{{ lecture.videoFile.name }}</span>
+                      <span class="upload-success">✓ Uploaded</span>
+                      <button type="button" (click)="removeVideo($index)" class="remove-file-btn">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                        </svg>
+                      </button>
+                    </div>
+                  }
+                  
+                  @if (submitted && (!lecture.videoFile || !lecture.videoUrl)) {
+                    <div class="error-text">Lecture video is required</div>
+                  }
+                </div>
+
+                <div class="form-group">
+                  <label class="checkbox-label">
+                    <input
+                      type="checkbox"
+                      [(ngModel)]="lecture.freePreview"
+                      [name]="'freePreview_' + $index"
+                      class="checkbox-input"
+                    />
+                    <span class="checkbox-custom"></span>
+                    Free Preview
+                  </label>
+                </div>
+              </div>
+
+              <button type="button" (click)="removeLecture($index)" class="btn btn-danger mt-4">
+                <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
+                </svg>
+                Remove Lecture
+              </button>
+            </div>
+          }
+
+          <button type="button" (click)="addLecture()" class="btn btn-outline full-width">
+            <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+            </svg>
+            Add Lecture
+          </button>
+        </div>
+      </div>
+
+      <!-- Action Buttons -->
+      <div class="form-actions">
+        <button
+          type="button"
+          (click)="cancel()"
+          class="btn btn-secondary"
+          [disabled]="isCreating"
+        >
+          Cancel
+        </button>
+        <button
+          type="submit"
+          class="btn btn-primary"
+          [disabled]="isCreating || uploadingImage || isAnyLectureUploading()"
+        >
+          @if (isCreating) {
+            <svg class="animate-spin w-4 h-4 mr-2" fill="none" viewBox="0 0 24 24">
+              <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+              <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+            </svg>
+            Creating Course...
+          } @else {
+            <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+            </svg>
+            Create Course
+          }
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

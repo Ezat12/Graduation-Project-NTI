@@ -4,6 +4,6 @@ export const routes: Routes = [
   {
     path: 'instructor',
     loadChildren: () =>
-      import('./instructor/instructor-routing-module').then((m) => m.InstructorRoutingModule),
+      import('./instructor/instructor-module').then((m) => m.InstructorModule),
   },
 ];

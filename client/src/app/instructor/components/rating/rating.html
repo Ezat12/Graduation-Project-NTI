@@ -1,17 +1,43 @@
 <div class="rating-container">
   <div class="header-section mb-8">
     <h1 class="text-3xl font-bold text-gray-800 mb-4">Course Ratings & Reviews</h1>
+    
+    <!-- Filter Section -->
+    <div class="flex flex-wrap gap-4 mb-6">
+      <div class="flex-1 min-w-[200px]">
+        <select 
+          [(ngModel)]="selectedCourseId" 
+          (change)="onCourseFilterChange()"
+          class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white"
+        >
+          <option value="">All Courses</option>
+          @for (course of courses; track course._id) {
+            <option [value]="course._id">{{ course.title }}</option>
+          }
+        </select>
+      </div>
+      
+      @if (selectedCourseId) {
+        <button 
+          (click)="clearFilter()"
+          class="px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors"
+        >
+          Clear Filter
+        </button>
+      }
+    </div>
+
     <div class="flex items-center gap-4">
       <div class="bg-white p-4 rounded-lg shadow-md">
         <div class="text-center">
-          <div class="text-3xl font-bold text-yellow-500">4.8</div>
+          <div class="text-3xl font-bold text-yellow-500">{{average}}</div>
           <div class="text-sm text-gray-600">Average Rating</div>
         </div>
       </div>
       <div class="bg-white p-4 rounded-lg shadow-md">
         <div class="text-center">
-          <div class="text-3xl font-bold text-blue-600">127</div>
-          <div class="text-sm text-gray-600">Total Reviews</div>
+          <div class="text-3xl font-bold text-blue-600">{{filteredReviews.length}}</div>
+          <div class="text-sm text-gray-600">{{ selectedCourseId ? 'Filtered Reviews' : 'Total Reviews' }}</div>
         </div>
       </div>
     </div>
@@ -20,109 +46,64 @@
   <div class="rating-breakdown bg-white p-6 rounded-lg shadow-md mb-8">
     <h2 class="text-xl font-semibold text-gray-800 mb-4">Rating Distribution</h2>
     <div class="space-y-3">
-      <div class="flex items-center">
-        <span class="w-12 text-sm text-gray-600">5★</span>
-        <div class="flex-1 mx-4 bg-gray-200 rounded-full h-2">
-          <div class="bg-yellow-500 h-2 rounded-full" style="width: 85%"></div>
+      @for (star of [5, 4, 3, 2, 1]; track star) {
+        <div class="flex items-center">
+          <span class="w-12 text-sm text-gray-600">{{star}}★</span>
+          <div class="flex-1 mx-4 bg-gray-200 rounded-full h-2">
+            <div class="bg-yellow-500 h-2 rounded-full" 
+                 [style.width.%]="ratingPercentages[star]"></div>
+          </div>
+          <span class="w-12 text-sm text-gray-600">{{ratingPercentages[star]}}%</span>
+          <span class="w-8 text-xs text-gray-500 ml-2">({{ratingDistribution[star]}})</span>
         </div>
-        <span class="w-12 text-sm text-gray-600">85%</span>
-      </div>
-      <div class="flex items-center">
-        <span class="w-12 text-sm text-gray-600">4★</span>
-        <div class="flex-1 mx-4 bg-gray-200 rounded-full h-2">
-          <div class="bg-yellow-500 h-2 rounded-full" style="width: 12%"></div>
-        </div>
-        <span class="w-12 text-sm text-gray-600">12%</span>
-      </div>
-      <div class="flex items-center">
-        <span class="w-12 text-sm text-gray-600">3★</span>
-        <div class="flex-1 mx-4 bg-gray-200 rounded-full h-2">
-          <div class="bg-yellow-500 h-2 rounded-full" style="width: 2%"></div>
-        </div>
-        <span class="w-12 text-sm text-gray-600">2%</span>
-      </div>
-      <div class="flex items-center">
-        <span class="w-12 text-sm text-gray-600">2★</span>
-        <div class="flex-1 mx-4 bg-gray-200 rounded-full h-2">
-          <div class="bg-yellow-500 h-2 rounded-full" style="width: 1%"></div>
-        </div>
-        <span class="w-12 text-sm text-gray-600">1%</span>
-      </div>
-      <div class="flex items-center">
-        <span class="w-12 text-sm text-gray-600">1★</span>
-        <div class="flex-1 mx-4 bg-gray-200 rounded-full h-2">
-          <div class="bg-yellow-500 h-2 rounded-full" style="width: 0%"></div>
-        </div>
-        <span class="w-12 text-sm text-gray-600">0%</span>
-      </div>
+      }
     </div>
   </div>
   
   <div class="reviews-section">
     <h2 class="text-xl font-semibold text-gray-800 mb-4">Recent Reviews</h2>
-    <div class="space-y-4">
-      <div class="bg-white p-6 rounded-lg shadow-md">
-        <div class="flex items-center justify-between mb-3">
-          <div class="flex items-center">
-            <div class="h-10 w-10 bg-blue-500 rounded-full flex items-center justify-center text-white font-semibold">
-              A
-            </div>
-            <div class="ml-3">
-              <div class="text-sm font-medium text-gray-900">Ahmed Mohamed</div>
-              <div class="flex text-yellow-500">
-                ★★★★★
+    
+    @if (isLoading) {
+      <div class="flex justify-center items-center py-12">
+        <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
+        <span class="ml-3 text-gray-600">Loading reviews...</span>
+      </div>
+    } @else if (filteredReviews.length > 0) {
+      <div class="space-y-4">
+        @for (review of filteredReviews; track review._id) {
+          <div class="bg-white p-6 rounded-lg shadow-md">
+            <div class="flex items-center justify-between mb-3">
+              <div class="flex items-center">
+                <div class="h-10 w-10 rounded-full flex items-center justify-center text-white font-semibold"
+                     [style.background-color]="getAvatarColor(review.userId.name)">
+                  {{ getInitials(review.userId.name) }}
+                </div>
+                <div class="ml-3">
+                  <div class="text-sm font-medium text-gray-900">{{ review.userId.name }}</div>
+                  <div class="flex text-yellow-500">
+                    {{ getStars(review.rating) }}
+                  </div>
+                </div>
               </div>
+              <span class="text-sm text-gray-500">{{ getTimeAgo(review.createdAt) }}</span>
+            </div>
+            @if (review.comment) {
+              <p class="text-gray-700 mb-3">{{ review.comment }}</p>
+            }
+            <div class="mt-3 text-sm text-gray-600">
+              Course: <span class="font-medium">{{ review.courseId.title }}</span>
             </div>
           </div>
-          <span class="text-sm text-gray-500">2 days ago</span>
-        </div>
-        <p class="text-gray-700">Excellent course! The instructor explains everything clearly and the examples are very helpful. Highly recommended for beginners.</p>
-        <div class="mt-3 text-sm text-gray-600">
-          Course: <span class="font-medium">Web Development Course</span>
-        </div>
+        }
       </div>
-      
-      <div class="bg-white p-6 rounded-lg shadow-md">
-        <div class="flex items-center justify-between mb-3">
-          <div class="flex items-center">
-            <div class="h-10 w-10 bg-green-500 rounded-full flex items-center justify-center text-white font-semibold">
-              S
-            </div>
-            <div class="ml-3">
-              <div class="text-sm font-medium text-gray-900">Sarah Ahmed</div>
-              <div class="flex text-yellow-500">
-                ★★★★★
-              </div>
-            </div>
-          </div>
-          <span class="text-sm text-gray-500">5 days ago</span>
-        </div>
-        <p class="text-gray-700">Great content and well-structured lessons. The practical exercises really help solidify the concepts.</p>
-        <div class="mt-3 text-sm text-gray-600">
-          Course: <span class="font-medium">React Fundamentals</span>
-        </div>
+    } @else {
+      <div class="text-center py-12">
+        <svg class="w-16 h-16 text-gray-400 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path>
+        </svg>
+        <h3 class="text-lg font-medium text-gray-900 mb-2">No reviews yet</h3>
+        <p class="text-gray-500">No students have reviewed your courses yet. Reviews will appear here once students start rating your courses.</p>
       </div>
-      
-      <div class="bg-white p-6 rounded-lg shadow-md">
-        <div class="flex items-center justify-between mb-3">
-          <div class="flex items-center">
-            <div class="h-10 w-10 bg-yellow-500 rounded-full flex items-center justify-center text-white font-semibold">
-              M
-            </div>
-            <div class="ml-3">
-              <div class="text-sm font-medium text-gray-900">Mohamed Ali</div>
-              <div class="flex text-yellow-500">
-                ★★★★☆
-              </div>
-            </div>
-          </div>
-          <span class="text-sm text-gray-500">1 week ago</span>
-        </div>
-        <p class="text-gray-700">Good course overall. Some topics could be explained in more detail, but the instructor is very responsive to questions.</p>
-        <div class="mt-3 text-sm text-gray-600">
-          Course: <span class="font-medium">JavaScript Basics</span>
-        </div>
-      </div>
-    </div>
+    }
   </div>
 </div>
