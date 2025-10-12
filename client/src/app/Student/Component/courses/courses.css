@@ -1,0 +1,19 @@
+.card-title {
+  font-size: 1.1rem;
+}
+
+.card-text {
+  font-size: 0.9rem;
+}
+
+.btn-success {
+  transition: transform 0.2s;
+}
+
+.btn-success:hover {
+  transform: scale(1.05);
+}
+
+.bg-white {
+  background-color: #fff !important;
+}
