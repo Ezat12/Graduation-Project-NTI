@@ -2,6 +2,7 @@ const express = require("express");
 const app = express();
 const cors = require("cors");
 const dotenv = require("dotenv");
+const path = require("path");
 const connectionDB = require("./config/connectionDB");
 const usersRoute = require("./routes/user.route");
 const authRoute = require("./routes/auth.route");
@@ -13,8 +14,8 @@ const uploadRoute = require("./routes/upload.route");
 const errorHandler = require("./middleware/errorHandler.middleware");
 const courseRoute = require("./routes/course.route");
 app.use(express.json());
+dotenv.config({});
 app.use(cors());
-dotenv.config();
 
 // Connection DB
 connectionDB();

@@ -23,7 +23,7 @@ const signUp = expressAsyncHandler(async (req, res, next) => {
 const login = expressAsyncHandler(async (req, res, next) => {
   const { email, password } = req.body;
 
-  const user = await User.findOne({ email }).select("+password");
+  const user = await User.findOne({ email }).select("+password +__v");
 
   if (!user) {
     return next(new ApiError("Incorrect email or password", 400));
@@ -41,6 +41,35 @@ const login = expressAsyncHandler(async (req, res, next) => {
 
   res.status(200).json({ status: "success", user, token });
 });
+
+const changeDataUser = expressAsyncHandler(async (req , res , next) => {
+  try {
+    const user = req.user;
+    const { name } = req.body;
+
+    if (!name) {
+      return next(new ApiError("Name is required", 400));
+    }
+
+    const updateUser = await User.findByIdAndUpdate(
+      user._id, 
+      { name }, 
+      { new: true, runValidators: true }
+    );
+
+    if (!updateUser) {
+      return next(new ApiError("User not found", 404));
+    }
+
+    res.status(200).json({
+      status: "success", 
+      data: updateUser,
+      message: "Name updated successfully"
+    });
+  } catch (error) {
+    return next(new ApiError(error.message || "Failed to update user", 500));
+  }
+})
 
 const changePassword = expressAsyncHandler(async (req, res, next) => {
   const { currentPassword, newPassword } = req.body;
@@ -75,7 +104,7 @@ const changePassword = expressAsyncHandler(async (req, res, next) => {
 const getProfile = expressAsyncHandler(async (req, res, next) => {
   const userId = req.user._id;
 
-  const user = await User.findById(userId);
+  const user = await User.findById(userId).select("-__V");
 
   if (!user) {
     return next(new ApiError("User not found", 404));
@@ -87,6 +116,7 @@ const getProfile = expressAsyncHandler(async (req, res, next) => {
 module.exports = {
   signUp,
   login,
+  changeDataUser,
   changePassword,
   getProfile,
 };

@@ -33,11 +33,42 @@ const createReview = asyncHandler(async (req, res, next) => {
   res.status(201).json({ status: " success", data: newReview });
 });
 
-const getAllReviews = asyncHandler(async (req, res, next) => {
-  const reviews = await Review.find().populate("userId").populate("courseId");
-  // const count
-  res.status(200).json({ status: "success", data: reviews });
+const getAllReviewsInstructor = asyncHandler(async (req, res, next) => {
+  const instructorId = req.user._id;
+
+  const instructorCourses = await Course.find({ instructorId }).select("_id");
+
+  if (!instructorCourses || instructorCourses.length === 0) {
+    return next(new ApiError("No courses found for this instructor", 404));
+  }
+
+  const courseIds = instructorCourses.map((course) => course._id);
+
+  const countReviews = await Review.countDocuments({ courseId: { $in: courseIds } });
+
+  const features = new apiFeatures(
+    Review.find({ courseId: { $in: courseIds } })
+      .populate("userId", "_id name email avatarUrl")
+      .populate("courseId", "_id title"),
+    req.query
+  )
+    .fields()
+    .sort()
+    .filtering()
+    .search()
+    .pagination(countReviews);
+
+  const { paginationResult, mongooseQuery } = features;
+  const reviews = await mongooseQuery;
+
+  res.status(200).json({
+    status: "success",
+    results: reviews.length,
+    paginationResult,
+    data: reviews,
+  });
 });
+
 
 const getAllReviewsToCourse = asyncHandler(async (req, res, next) => {
   const { courseId } = req.params;
@@ -145,8 +176,8 @@ const deleteReview = asyncHandler(async (req, res, next) => {
 
 module.exports = {
   createReview,
-  getAllReviews,
   getAllReviewsToCourse,
+  getAllReviewsInstructor,
   getReviewById,
   updateReview,
   deleteReview,
