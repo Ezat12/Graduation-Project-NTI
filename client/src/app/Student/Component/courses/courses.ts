@@ -9,11 +9,11 @@ import { ICourse } from '../../Model/i-course';
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule],
   templateUrl: './courses.html',
-  styleUrls: ['./courses.css']
+  styleUrls: ['./courses.css'],
 })
 export class Courses implements OnInit {
-  courses: ICourse[] = [];
-  filteredCourses: ICourse[] = [];
+  courses: any[] = [];
+  filteredCourses: any[] = [];
   filterForm: FormGroup;
 
   constructor(private service: CourseService, private fb: FormBuilder) {
@@ -22,55 +22,52 @@ export class Courses implements OnInit {
       language: [''],
       rating: [''],
       priceType: [''],
-      maxPrice: [{ value: '', disabled: true }]
+      maxPrice: [{ value: '', disabled: true }],
     });
   }
 
-ngOnInit(): void {
-  this.service.getCourses().subscribe({
-    next: (data) => {
-      this.courses = data;
-      this.filteredCourses = [...this.courses];
-    },
-    error: (err) => {
-      console.error('Error fetching courses:', err);
-    }
-  });
+  ngOnInit(): void {
+    this.service.getCourses().subscribe({
+      next: (data) => {
+        this.courses = data;
+        this.filteredCourses = [...this.courses];
+      },
+      error: (err) => {
+        console.error('Error fetching courses:', err);
+      },
+    });
 
-  this.filterForm.get('priceType')?.valueChanges.subscribe(val => {
-    const maxPriceControl = this.filterForm.get('maxPrice');
-    if (val === 'paid') {
-      maxPriceControl?.enable();
-    } else {
-      maxPriceControl?.disable();
-      maxPriceControl?.reset();
-    }
-  });
+    this.filterForm.get('priceType')?.valueChanges.subscribe((val) => {
+      const maxPriceControl = this.filterForm.get('maxPrice');
+      if (val === 'paid') {
+        maxPriceControl?.enable();
+      } else {
+        maxPriceControl?.disable();
+        maxPriceControl?.reset();
+      }
+    });
 
-  this.filterForm.get('maxPrice')?.disable();
-}
+    this.filterForm.get('maxPrice')?.disable();
+  }
 
+  applyFilters() {
+    const { category, language, rating, priceType, maxPrice } = this.filterForm.value;
 
-applyFilters() {
-  const { category, language, rating, priceType, maxPrice } = this.filterForm.value;
+    this.filteredCourses = this.courses.filter((course) => {
+      const priceTypeMatch =
+        priceType === 'free' ? course.price === 0 : priceType === 'paid' ? course.price > 0 : true;
 
-  this.filteredCourses = this.courses.filter(course => {
-    const priceTypeMatch =
-      priceType === 'free' ? course.price === 0 :
-      priceType === 'paid' ? course.price > 0 :
-      true;
+      const maxPriceMatch = maxPrice ? course.price <= +maxPrice : true;
 
-    const maxPriceMatch = maxPrice ? course.price <= +maxPrice : true;
-
-    return (
-      (!category || course.category.toLowerCase().includes(category.toLowerCase())) &&
-      (!language || course.language.toLowerCase().includes(language.toLowerCase())) &&
-      (!rating || course.rating >= +rating) &&
-      priceTypeMatch &&
-      maxPriceMatch
-    );
-  });
-}
+      return (
+        (!category || course.category.toLowerCase().includes(category.toLowerCase())) &&
+        (!language || course.language.toLowerCase().includes(language.toLowerCase())) &&
+        (!rating || course.rating >= +rating) &&
+        priceTypeMatch &&
+        maxPriceMatch
+      );
+    });
+  }
 
   resetFilters() {
     this.filterForm.reset();
