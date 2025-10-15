@@ -5,6 +5,7 @@ const {
   addCourseToStudent,
   getStudentCourses,
   removeStudentFromCourse,
+  getAllStudentToInstructor,
 } = require("../controllers/studentCourse.controller");
 const {
   addStudentCourseValidator,
@@ -16,6 +17,6 @@ router.use(protectAuth);
 
 router.post("/:courseId", addStudentCourseValidator, addCourseToStudent);
 router.get("/", getStudentCourses);
-router.delete("/", removeStudentCourseValidator, removeStudentFromCourse);
-
+router.get("/instructor/students", getAllStudentToInstructor);
+router.delete("/:courseId", removeStudentCourseValidator, removeStudentFromCourse);
 module.exports = router;

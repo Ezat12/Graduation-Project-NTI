@@ -1,0 +1,46 @@
+* [33mcacdc34[m[33m ([m[1;36mHEAD -> [m[1;32mmain[m[33m)[m fixed conflict
+* [33mdbe1352[m add dashboard instructor
+* [33mafbcdc1[m add dashboard instructor
+* [33m9da75f5[m add changes in folder server
+* [33md18dc69[m setup frontend and create folder instructor
+* [33m86b4ade[m enhance review functionality with error handling and validation improvements
+* [33m0ce512e[m refactor course management and upload functionality with validation improvements
+* [33mafddf34[m[33m ([m[1;32mmohamed[m[33m)[m fix: update database connection URI environment variable
+*   [33me8df7ea[m merge amany
+[32m|[m[33m\[m  
+[32m|[m * [33mf9d27a4[m add chenge
+[32m|[m * [33mcfc69c5[m action done
+[32m|[m *   [33mdd11d27[m Merge remote-tracking branch 'origin/main' into Amany
+[32m|[m [34m|[m[35m\[m  
+[32m|[m * [35m\[m   [33m0fb3502[m resolved
+[32m|[m [36m|[m[1;31m\[m [35m\[m  
+[32m|[m * [1;31m\[m [35m\[m   [33me42221b[m resolved
+[32m|[m [1;32m|[m[1;33m\[m [1;31m\[m [35m\[m  
+* [1;32m|[m [1;33m|[m [1;31m|[m [35m|[m [33mdd1fd0b[m  improve route structure
+[35m|[m [1;32m|[m[35m_[m[1;33m|[m[35m_[m[1;31m|[m[35m/[m  
+[35m|[m[35m/[m[1;32m|[m [1;33m|[m [1;31m|[m   
+* [1;32m|[m [1;33m|[m [1;31m|[m [33mc857757[m Done
+* [1;32m|[m [1;33m|[m [1;31m|[m [33m283f84d[m refactor: enhance course schema with lecture details
+* [1;32m|[m [1;33m|[m [1;31m|[m [33mf06e044[m add uploads files
+* [1;32m|[m [1;33m|[m [1;31m|[m   [33md742099[m merge mohamed
+[1;34m|[m[1;35m\[m [1;32m\[m [1;33m\[m [1;31m\[m  
+[1;34m|[m * [1;32m|[m [1;33m|[m [1;31m|[m [33m2f7e623[m refactor: cahnge middleware student course route
+[1;34m|[m * [1;32m|[m [1;33m|[m [1;31m|[m [33m160555e[m refactor: improved student course schema, controller, routes, and validation (work with Mohamed)
+[1;34m|[m * [1;32m|[m [1;33m|[m [1;31m|[m [33m5cac06e[m studentCourse
+[1;34m|[m  [1;32m/[m [1;33m/[m [1;31m/[m  
+* [1;32m|[m [1;33m|[m [1;31m|[m [33m018fffb[m add folder upload
+* [1;32m|[m [1;33m|[m [1;31m|[m [33md9d3034[m Add error handling middleware and update routes for categories and reviews
+* [1;32m|[m [1;33m|[m [1;31m|[m [33m8e1c74b[m Remove .env from repository
+* [1;32m|[m [1;33m|[m [1;31m|[m   [33mac8247f[m merge shimaa
+[1;36m|[m[31m\[m [1;32m\[m [1;33m\[m [1;31m\[m  
+[1;36m|[m * [1;32m|[m [1;33m|[m [1;31m|[m [33m18d3c44[m Refactor: chenge validator category and more (work with shimaa)
+[1;36m|[m * [1;32m|[m [1;33m|[m [1;31m|[m [33m8c8e253[m Add category controller and error handling
+* [31m|[m [1;32m|[m [1;33m|[m [1;31m|[m   [33mf06c623[m merge amany
+[1;33m|[m[1;31m\[m [31m\[m [1;32m\[m [1;33m\[m [1;31m\[m  
+[1;33m|[m [1;31m|[m[1;33m_[m[31m|[m[1;33m_[m[1;32m|[m[1;33m/[m [1;31m/[m  
+[1;33m|[m[1;33m/[m[1;31m|[m [31m|[m [1;32m|[m [1;31m/[m   
+[1;33m|[m [1;31m|[m [31m|[m[1;31m_[m[1;32m|[m[1;31m/[m    
+[1;33m|[m [1;31m|[m[1;31m/[m[31m|[m [1;32m|[m     
+[1;33m|[m * [31m|[m [1;32m|[m [33m02d26a8[m refactor: improved review controller , router and validation (work with amany
+[1;33m|[m [1;32m|[m [31m|[m[1;32m/[m  
+[1;33m|[m [1;32m|[m[1;32m/[m[31m|[m   

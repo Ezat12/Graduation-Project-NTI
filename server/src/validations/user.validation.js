@@ -56,7 +56,6 @@ exports.validateUpdatedUser = [
       return true;
     }),
 
-  ,
   body("password")
     .optional()
     .isLength({ min: 6 })
@@ -66,6 +65,16 @@ exports.validateUpdatedUser = [
     .optional()
     .isIn(["student", "teacher", "admin"])
     .withMessage("Role must be student, teacher, or admin"),
+
+  validatorError,
+];
+
+exports.validateChangeMe = [
+  body("name")
+    .notEmpty()
+    .withMessage("Name is required")
+    .isLength({ min: 2 })
+    .withMessage("Name must be at least 2 characters"),
 
   validatorError,
 ];
@@ -80,4 +89,15 @@ exports.validateLogin = [
   body("password").notEmpty().withMessage("Password is required"),
 
   validatorError,
+];
+
+exports.validateChangePassword = [
+  body("currentPassword")
+    .notEmpty()
+    .withMessage("Current password is required"),
+  body("newPassword")
+    .isLength({ min: 6 })
+    .withMessage("New password must be at least 6 characters long"),
+
+  validatorError
 ];

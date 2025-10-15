@@ -1,0 +1,18 @@
+@import url('../create-course/create-course.css');
+.hidden-file-input { display: none; }
+.video-actions-row { display: flex; gap: 0.5rem; align-items: center; flex-wrap: wrap; }
+.image-actions-row { display: flex; gap: 0.5rem; align-items: center; flex-wrap: wrap; margin-bottom: 0.5rem; }
+.media-full { margin-top: 0.5rem; border-radius: 0.5rem; overflow: hidden; }
+.media-full-img { width: 100%; height: auto; display: block; object-fit: cover; max-height: 320px; }
+.media-full-video { width: 100%; height: auto; display: block; border-radius: 0.5rem; max-height: 360px; }
+
+@media (max-width: 768px) {
+  .media-full-img { max-height: 220px; }
+  .media-full-video { max-height: 240px; }
+}
+
+/* Ensure Free Preview checkbox is visible */
+.lecture-item .checkbox-label { display: inline-flex; align-items: center; gap: 0.5rem; }
+.lecture-item .checkbox-input { position: static; opacity: 1; width: 1.25rem; height: 1.25rem; accent-color: #3b82f6; }
+
+

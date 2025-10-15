@@ -18,7 +18,12 @@ const loginUser = expressAsyncHandler(async (req, res, next) => {
     return next(new ApiError("invalid email or password", 401))
   }
 
-  const token = jwt.sign({userId: user._id}, process.env.SECRET_TOKEN, {expiresIn: "7d"})
+  // const token = jwt.sign({userId: user._id}, process.env.SECRET_TOKEN, {expiresIn: "7d"})
+  const token = jwt.sign(
+  { id: user._id },
+  process.env.JWT_SECRET,
+  { expiresIn: '1h' }
+);
 
   res.status(200).json({
     status: "success",
@@ -88,6 +93,18 @@ const deleteUser = expressAsyncHandler(async (req, res, next) => {
   res.status(200).json({ status: "success", message: "Deleted successfully" });
 });
 
+//added to get instructors
+const getInstructors = expressAsyncHandler(async (req, res, next) => {
+  const instructors = await User.find({ role: "instructor" })
+    .select("name email role createdAt updatedAt");
+
+  res.status(200).json({
+    status: "success",
+    results: instructors.length,
+    data: instructors,
+  });
+});
+
 module.exports = {
   createUser,
   getAllUser,
@@ -95,4 +112,5 @@ module.exports = {
   updateUser,
   deleteUser,
   loginUser,
+  getInstructors
 };

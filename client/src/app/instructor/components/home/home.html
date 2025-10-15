@@ -14,7 +14,7 @@
       </div>
     </div>
   </div>
-  
+
   <div class="stats-grid grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
     <div class="stat-card bg-white p-6 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 border border-gray-100">
       <div class="flex items-center justify-between">
@@ -26,15 +26,15 @@
           </div>
           <div class="ml-4">
             <p class="text-sm font-medium text-gray-600">Total Courses</p>
-            <p class="text-3xl font-bold text-gray-900">12</p>
+            <p class="text-3xl font-bold text-gray-900">{{ courses.length }}</p>
           </div>
         </div>
         <div class="text-right">
-          <span class="text-green-600 text-sm font-medium">+2 this month</span>
+          <span class="text-green-600 text-sm font-medium">+{{courses.length}} this month</span>
         </div>
       </div>
     </div>
-    
+
     <div class="stat-card bg-white p-6 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 border border-gray-100">
       <div class="flex items-center justify-between">
         <div class="flex items-center">
@@ -45,15 +45,15 @@
           </div>
           <div class="ml-4">
             <p class="text-sm font-medium text-gray-600">Total Students</p>
-            <p class="text-3xl font-bold text-gray-900">245</p>
+            <p class="text-3xl font-bold text-gray-900">{{students.length}}</p>
           </div>
         </div>
         <div class="text-right">
-          <span class="text-green-600 text-sm font-medium">+15 this week</span>
+          <span class="text-green-600 text-sm font-medium">+{{students.length}} this week</span>
         </div>
       </div>
     </div>
-    
+
     <div class="stat-card bg-white p-6 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 border border-gray-100">
       <div class="flex items-center justify-between">
         <div class="flex items-center">
@@ -64,7 +64,7 @@
           </div>
           <div class="ml-4">
             <p class="text-sm font-medium text-gray-600">Average Rating</p>
-            <p class="text-3xl font-bold text-gray-900">4.8</p>
+            <p class="text-3xl font-bold text-gray-900">{{averageReviews}}</p>
           </div>
         </div>
         <div class="text-right">
@@ -73,37 +73,37 @@
       </div>
     </div>
   </div>
-  
+
   <div class="recent-activity bg-white p-8 rounded-2xl shadow-lg border border-gray-100">
     <div class="flex items-center justify-between mb-6">
       <h2 class="text-2xl font-bold text-gray-800">Recent Activity</h2>
       <button class="text-blue-600 hover:text-blue-800 font-medium">View All</button>
     </div>
-    <div class="space-y-4">
-      <div class="flex items-center p-4 bg-gradient-to-r from-blue-50 to-blue-100 rounded-xl border border-blue-200 hover:shadow-md transition-all duration-300">
-        <div class="w-3 h-3 bg-blue-500 rounded-full mr-4 animate-pulse"></div>
-        <div class="flex-1">
-          <span class="text-gray-800 font-medium">New student enrolled in "Web Development Course"</span>
-          <div class="text-sm text-gray-600 mt-1">Ahmed Mohamed just joined your course</div>
-        </div>
-        <span class="text-sm text-gray-500 font-medium">2 hours ago</span>
+
+    <!-- Recent Students -->
+    @if (students.length > 0) {
+      <div class="space-y-4">
+        @for (student of getRecentStudents(); track student._id) {
+          <div class="flex items-center p-4 bg-gradient-to-r from-blue-50 to-blue-100 rounded-xl border border-blue-200 hover:shadow-md transition-all duration-300">
+            <div class="w-10 h-10 bg-gradient-to-r from-blue-500 to-blue-600 rounded-full flex items-center justify-center mr-4">
+              <span class="text-white font-bold text-sm">{{student.userId.name.charAt(0).toUpperCase()}}</span>
+            </div>
+            <div class="flex-1">
+              <span class="text-gray-800 font-medium">{{student.userId.name}} enrolled in "{{student.courses[0]?.title}}"</span>
+              <div class="text-sm text-gray-600 mt-1">{{student.userId.email}} just joined your course</div>
+            </div>
+            <span class="text-sm text-gray-500 font-medium">{{getTimeAgo(student.createdAt)}}</span>
+          </div>
+        }
       </div>
-      <div class="flex items-center p-4 bg-gradient-to-r from-green-50 to-green-100 rounded-xl border border-green-200 hover:shadow-md transition-all duration-300">
-        <div class="w-3 h-3 bg-green-500 rounded-full mr-4 animate-pulse"></div>
-        <div class="flex-1">
-          <span class="text-gray-800 font-medium">Course "React Fundamentals" completed by 15 students</span>
-          <div class="text-sm text-gray-600 mt-1">Congratulations! Great completion rate</div>
-        </div>
-        <span class="text-sm text-gray-500 font-medium">4 hours ago</span>
+    } @else {
+      <div class="text-center py-8">
+        <svg class="w-16 h-16 text-gray-400 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
+        </svg>
+        <h3 class="text-lg font-medium text-gray-900 mb-2">No recent activity</h3>
+        <p class="text-gray-500">Students will appear here when they enroll in your courses.</p>
       </div>
-      <div class="flex items-center p-4 bg-gradient-to-r from-yellow-50 to-yellow-100 rounded-xl border border-yellow-200 hover:shadow-md transition-all duration-300">
-        <div class="w-3 h-3 bg-yellow-500 rounded-full mr-4 animate-pulse"></div>
-        <div class="flex-1">
-          <span class="text-gray-800 font-medium">New rating received: 5 stars for "JavaScript Basics"</span>
-          <div class="text-sm text-gray-600 mt-1">Excellent feedback from Sarah Ahmed</div>
-        </div>
-        <span class="text-sm text-gray-500 font-medium">6 hours ago</span>
-      </div>
-    </div>
+    }
   </div>
 </div>

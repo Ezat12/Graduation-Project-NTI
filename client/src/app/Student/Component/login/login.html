@@ -1,0 +1,54 @@
+<div class="container d-flex justify-content-center align-items-center min-vh-100">
+  <div class="card shadow-lg border-0 rounded-4 p-4" style="max-width: 420px; width: 100%;">
+    <h3 class="text-center mb-4 fw-bold text-success">Welcome Back</h3>
+
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+      <div class="mb-3">
+        <label for="email" class="form-label fw-semibold">Email</label>
+        <input
+          type="email"
+          name="email"
+          class="form-control form-control-lg"
+          placeholder="Enter your email"
+          formControlName="email"
+          [ngClass]="{'is-invalid': (email?.touched || email?.dirty) && email?.invalid}"
+        />
+        <div class="invalid-feedback">
+          @if (email?.errors?.['required']) {
+            <div>Please enter your email</div>
+          }
+        </div>
+      </div>
+
+      <div class="mb-3">
+        <label for="password" class="form-label fw-semibold">Password</label>
+        <input
+          type="password"
+          name="password"
+          class="form-control form-control-lg"
+          placeholder="Enter your password"
+          formControlName="password"
+          [ngClass]="{'is-invalid': (password?.touched || password?.dirty) && password?.invalid}"
+        />
+        <div class="invalid-feedback">
+          @if (password?.errors?.['required']) {
+            <div>Please enter your password</div>
+          }
+        </div>
+      </div>
+
+      <button class="btn btn-success btn-lg w-100 rounded-3 shadow-sm mt-2" [disabled]="loginForm.invalid">
+        Sign In
+      </button>
+
+      <div class="text-center mt-4">
+        <small class="text-muted">
+          Don't have an account?
+          <a routerLink="/register" class="text-success fw-semibold text-decoration-none">
+            Create One
+          </a>
+        </small>
+      </div>
+    </form>
+  </div>
+</div>

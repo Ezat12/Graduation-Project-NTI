@@ -1,0 +1,68 @@
+<div class="container py-5">
+  <h2 class="text-center text-success fw-bold mb-4 border-bottom d-inline-block pb-2">
+    CONTACT US
+  </h2>
+
+  <div class="row bg-white shadow rounded-4 p-4">
+    <div class="col-md-6">
+      <h5 class="mb-3">Leave us a message</h5>
+<form [formGroup]="contactForm" (ngSubmit)="onSubmit()" novalidate>
+  <div class="mb-3">
+    <label class="form-label">Name</label>
+    <input formControlName="name" type="text" class="form-control" placeholder="First Name Last Name" />
+
+    <div class="text-danger small mt-1" [hidden]="!(contactForm.get('name')?.touched && contactForm.get('name')?.invalid)">
+      <div [hidden]="!contactForm.get('name')?.errors?.['required']">Name is required</div>
+      <div [hidden]="!contactForm.get('name')?.errors?.['minlength']">Name must be at least 3 characters</div>
+    </div>
+  </div>
+
+  <div class="mb-3">
+    <label class="form-label">Email Address</label>
+    <input formControlName="email" type="email" class="form-control" placeholder="Email Address" />
+
+    <div class="text-danger small mt-1" [hidden]="!(contactForm.get('email')?.touched && contactForm.get('email')?.invalid)">
+      <div [hidden]="!contactForm.get('email')?.errors?.['required']">Email is required</div>
+      <div [hidden]="!contactForm.get('email')?.errors?.['email']">Enter a valid email</div>
+    </div>
+  </div>
+
+  <div class="mb-3">
+    <label class="form-label">Your Message</label>
+    <textarea formControlName="message" rows="4" class="form-control" placeholder="Your Message"></textarea>
+
+    <div class="text-danger small mt-1" [hidden]="!(contactForm.get('message')?.touched && contactForm.get('message')?.invalid)">
+      <div [hidden]="!contactForm.get('message')?.errors?.['required']">Message is required</div>
+      <div [hidden]="!contactForm.get('message')?.errors?.['minlength']">Message must be at least 10 characters</div>
+    </div>
+  </div>
+
+  <button type="submit" class="btn btn-success w-100">Send</button>
+</form>
+    </div>
+
+    <div class="col-md-6 mt-4 mt-md-0">
+      <h5>Contact Details</h5>
+      <p class="text-muted small mb-1">
+         B 37/3 Ground Floor Double Story, Ramesh Nagar, Near Raja Garden Chowk, Delhi 110015
+      </p>
+      <p class="mb-1"><i class="fas fa-phone-alt text-success me-2"></i> +91 9599272754</p>
+      <p class="mb-3"><i class="fas fa-envelope text-success me-2"></i> hello@info.com.ng</p>
+      <div class="social-icons mb-3">
+        <a href="#" class="text-success me-3"><i class="fab fa-youtube"></i></a>
+        <a href="#" class="text-success me-3"><i class="fab fa-linkedin fa-lg"></i></a>
+        <a href="#" class="text-success me-3"><i class="fab fa-instagram fa-lg"></i></a>
+        <a href="#" class="text-success"><i class="fab fa-twitter fa-lg"></i></a>
+      </div>
+
+      <div class="ratio ratio-16x9 shadow-sm rounded overflow-hidden">
+        <iframe
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3503.115685497093!2d77.11399957467914!3d28.59837457568483!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390d04a4b7648c61%3A0x90c15f5d30b02de8!2sRamesh%20Nagar%2C%20New%20Delhi!5e0!3m2!1sen!2sin!4v1696760000000!5m2!1sen!2sin"
+          allowfullscreen
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade">
+        </iframe>
+      </div>
+    </div>
+  </div>
+</div>

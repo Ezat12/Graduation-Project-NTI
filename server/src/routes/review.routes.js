@@ -6,9 +6,9 @@ const {
   updateReviewValidator,
 } = require("../validations/reviewValidator");
 const {
-  getAllReviews,
   createReview,
   getAllReviewsToCourse,
+  getAllReviewsInstructor,
   getReviewById,
   updateReview,
   deleteReview,
@@ -19,7 +19,7 @@ router.use(protectAuth);
 
 router.post("/:courseId", createReviewValidator, createReview);
 
-router.get("/", allowedTo("admin"), getAllReviews);
+router.get("/", allowedTo("instructor"), getAllReviewsInstructor);
 router.get("/course/:courseId", getAllReviewsToCourse);
 router.get("/:id", getReviewById);
 

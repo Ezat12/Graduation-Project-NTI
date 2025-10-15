@@ -2,18 +2,46 @@
   <div class="header-section mb-8">
     <h1 class="text-3xl font-bold text-gray-800 mb-4">Settings</h1>
     <p class="text-gray-600">Manage your account settings and preferences</p>
+
+    @if (isLoading) {
+    <div class="flex items-center justify-center py-8">
+      <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
+      <span class="ml-3 text-gray-600">Loading user data...</span>
+    </div>
+    }
   </div>
 
+  @if (!isLoading && dataUser) {
   <div class="settings-grid grid grid-cols-1 lg:grid-cols-2 gap-8">
-    <!-- Profile Settings -->
     <div class="profile-settings bg-white p-6 rounded-lg shadow-md">
-      <h2 class="text-xl font-semibold text-gray-800 mb-6">Profile Information</h2>
+      <!-- <div class="flex items-center justify-between mb-6">
+          <h2 class="text-xl font-semibold text-gray-800">Profile Information</h2>
+          <button
+            class="text-blue-600 hover:text-blue-800 text-sm font-medium"
+          >
+            Refresh Data
+          </button>
+        </div> -->
+
+      @if (updateMessage) {
+      <div
+        class="mb-4 p-3 rounded-lg"
+        [class]="
+          updateMessage.includes('successfully')
+            ? 'bg-green-100 text-green-800'
+            : 'bg-red-100 text-red-800'
+        "
+      >
+        {{ updateMessage }}
+      </div>
+      }
+
       <div class="space-y-4">
         <div>
           <label class="block text-sm font-medium text-gray-700 mb-2">Full Name</label>
           <input
             type="text"
-            value="Ahmed Instructor"
+            [(ngModel)]="updateForm.name"
             class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
           />
         </div>
@@ -21,36 +49,74 @@
           <label class="block text-sm font-medium text-gray-700 mb-2">Email</label>
           <input
             type="email"
-            value="ahmed@instructor.com"
-            class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            [value]="dataUser.email"
+            readonly
+            class="w-full px-3 py-2 border border-gray-300 rounded-lg bg-gray-50 text-gray-500"
           />
         </div>
         <div>
-          <label class="block text-sm font-medium text-gray-700 mb-2">Bio</label>
-          <textarea
-            rows="4"
-            class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-            placeholder="Tell us about yourself..."
-          >
-Experienced web developer with 5+ years of teaching experience. Passionate about helping students learn modern web technologies.</textarea
-          >
+          <label class="block text-sm font-medium text-gray-700 mb-2">Role</label>
+          <input
+            type="text"
+            [value]="dataUser.role"
+            readonly
+            class="w-full px-3 py-2 border border-gray-300 rounded-lg bg-gray-50 text-gray-500"
+          />
+        </div>
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-2">Status</label>
+          <div class="flex items-center">
+            <span
+              class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium"
+              [class]="
+                dataUser.isActive ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'
+              "
+            >
+              {{ dataUser.isActive ? 'Active' : 'Inactive' }}
+            </span>
+          </div>
+        </div>
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-2">Member Since</label>
+          <input
+            type="text"
+            [value]="getFormattedDate(dataUser.createdAt)"
+            readonly
+            class="w-full px-3 py-2 border border-gray-300 rounded-lg bg-gray-50 text-gray-500"
+          />
         </div>
         <button
-          class="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition-colors"
+          (click)="updateProfile()"
+          [disabled]="isUpdating || !updateForm.name.trim()"
+          class="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
         >
-          Update Profile
+          {{ isUpdating ? 'Updating...' : 'Update Name' }}
         </button>
       </div>
     </div>
 
-    <!-- Security Settings -->
     <div class="security-settings bg-white p-6 rounded-lg shadow-md">
       <h2 class="text-xl font-semibold text-gray-800 mb-6">Security</h2>
+
+      @if (passwordMessage) {
+      <div
+        class="mb-4 p-3 rounded-lg"
+        [class]="
+          passwordMessage.includes('successfully')
+            ? 'bg-green-100 text-green-800'
+            : 'bg-red-100 text-red-800'
+        "
+      >
+        {{ passwordMessage }}
+      </div>
+      }
+
       <div class="space-y-4">
         <div>
           <label class="block text-sm font-medium text-gray-700 mb-2">Current Password</label>
           <input
             type="password"
+            [(ngModel)]="passwordForm.currentPassword"
             class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
           />
         </div>
@@ -58,6 +124,7 @@ Experienced web developer with 5+ years of teaching experience. Passionate about
           <label class="block text-sm font-medium text-gray-700 mb-2">New Password</label>
           <input
             type="password"
+            [(ngModel)]="passwordForm.newPassword"
             class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
           />
         </div>
@@ -65,15 +132,24 @@ Experienced web developer with 5+ years of teaching experience. Passionate about
           <label class="block text-sm font-medium text-gray-700 mb-2">Confirm New Password</label>
           <input
             type="password"
+            [(ngModel)]="passwordForm.confirmPassword"
             class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
           />
         </div>
         <button
-          class="bg-red-600 text-white px-6 py-2 rounded-lg hover:bg-red-700 transition-colors"
+          (click)="changePassword()"
+          [disabled]="
+            isChangingPassword ||
+            !passwordForm.currentPassword ||
+            !passwordForm.newPassword ||
+            !passwordForm.confirmPassword
+          "
+          class="bg-red-600 text-white px-6 py-2 rounded-lg hover:bg-red-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
         >
-          Change Password
+          {{ isChangingPassword ? 'Changing...' : 'Change Password' }}
         </button>
       </div>
     </div>
   </div>
+  }
 </div>

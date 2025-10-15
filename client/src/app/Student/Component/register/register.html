@@ -1,0 +1,78 @@
+<div class="container d-flex justify-content-center align-items-center min-vh-100">
+  <div class="card shadow-lg border-0 rounded-4 p-4" style="max-width: 420px; width: 100%;">
+    <h3 class="text-center mb-4 fw-bold text-success">Create Your Account</h3>
+
+    <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+      <div class="mb-3">
+        <label for="fullName" class="form-label fw-semibold">Full Name</label>
+        <input
+          type="text"
+          name="fullName"
+          placeholder="Enter your name"
+          class="form-control form-control-lg"
+          formControlName="name"
+          [ngClass]="{'is-invalid': (name?.touched || name?.dirty) && name?.invalid}"
+        />
+        <div class="invalid-feedback">
+          @if (name?.errors?.['required']) {
+            <div>Please enter your full name</div>
+          }
+          @if (name?.errors?.['minlength']) {
+            <div>Full name must be more than 5 letters</div>
+          }
+        </div>
+      </div>
+
+      <div class="mb-3">
+        <label for="email" class="form-label fw-semibold">Email</label>
+        <input
+          type="email"
+          name="email"
+          placeholder="Enter your email"
+          class="form-control form-control-lg"
+          formControlName="email"
+          [ngClass]="{'is-invalid': (email?.touched || email?.dirty) && email?.invalid}"
+        />
+        <div class="invalid-feedback">
+          @if (email?.errors?.['required']) {
+            <div>Please enter your email</div>
+          }
+          @if (email?.errors?.['email']) {
+            <div>Please enter your email correctly</div>
+          }
+        </div>
+      </div>
+
+      <div class="mb-3">
+        <label for="password" class="form-label fw-semibold">Password</label>
+        <input
+          type="password"
+          name="password"
+          placeholder="Enter your password"
+          class="form-control form-control-lg"
+          formControlName="password"
+          [ngClass]="{'is-invalid': (password?.touched || password?.dirty) && password?.invalid}"
+        />
+        <div class="invalid-feedback">
+          @if (password?.errors?.['required']) {
+            <div>Please enter your password</div>
+          }
+          @if (password?.errors?.['minlength']) {
+            <div>Password must be more than 5 characters</div>
+          }
+        </div>
+      </div>
+
+      <button type="submit" class="btn btn-success btn-lg w-100 rounded-3 shadow-sm mt-2" [disabled]="registerForm.invalid">
+        Create Account
+      </button>
+
+      <div class="text-center mt-4">
+        <small class="text-muted">
+          Already have an account?
+          <a routerLink="/login" class="text-success fw-semibold text-decoration-none">Sign in</a>
+        </small>
+      </div>
+    </form>
+  </div>
+</div>

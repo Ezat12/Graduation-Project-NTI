@@ -1,0 +1,45 @@
+body {
+  background-color: #f8f9fa;
+}
+
+.contact-container {
+  background: #f9f9f9;
+}
+
+.contact-info {
+  font-size: 0.95rem;
+}
+
+.social-icons i {
+  font-size: 1.4rem;
+  margin-right: 12px;
+  color: #28a745;
+  transition: 0.3s;
+  cursor: pointer;
+}
+
+.social-icons i:hover {
+  color: #1e7e34;
+  transform: scale(1.15);
+}
+
+form .form-control {
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  transition: border-color 0.3s;
+}
+
+form .form-control:focus {
+  border-color: #28a745;
+  box-shadow: 0 0 5px rgba(40, 167, 69, 0.2);
+}
+
+button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+iframe {
+  border: 0;
+
+}

@@ -39,7 +39,7 @@ class apiFeatures {
       const fields = this.queryString.fields.split(",").join(" ");
       this.mongooseQuery.select(fields);
     } else {
-      this.mongooseQuery.select("-__v  -createdAt -updatedAt");
+      this.mongooseQuery.select("-__v");
     }
     return this;
   }
