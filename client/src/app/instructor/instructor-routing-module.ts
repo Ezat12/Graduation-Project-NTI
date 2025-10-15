@@ -7,6 +7,8 @@ import { CreateCourse } from './components/create-course/create-course';
 import { Student } from './components/student/student';
 import { Rating } from './components/rating/rating';
 import { Setting } from './components/setting/setting';
+import { EditCourse } from './components/edit-course/edit-course';
+import { CoursesV } from './components/coursesv/coursesv';
 
 const routes: Routes = [
   {
@@ -27,8 +29,16 @@ const routes: Routes = [
         component: Courses,
       },
       {
+        path: 'coursesv',
+        component: CoursesV,
+      },
+      {
         path: 'courses/create',
         component: CreateCourse,
+      },
+      {
+        path: 'courses/:id/edit',
+        component: EditCourse,
       },
       {
         path: 'student',

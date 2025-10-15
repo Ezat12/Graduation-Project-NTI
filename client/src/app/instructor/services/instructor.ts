@@ -15,7 +15,7 @@ interface Category {
 export class Instructor {
   private baseUrl = 'http://localhost:3000/api/v1';
   private token =
-    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OGQyZWU4NTZmZjc1OGYxZWI1MDI2YjkiLCJpYXQiOjE3NjAyMDUwOTIsImV4cCI6MTc2MDM3Nzg5Mn0.VA5h_VS9iIbeH0eZRvO4qbpvw2S9zSUl1F01XS1iNgM';
+    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OGQyZWU4NTZmZjc1OGYxZWI1MDI2YjkiLCJpYXQiOjE3NjA1Mzk0NTIsImV4cCI6MTc2MDcxMjI1Mn0.v_LczTzCb98hxFEPoUZ2T06vSxrBqvMIy3ysfsDbGsY';
 
   private coursesCache: any[] | null = null;
 
@@ -34,6 +34,22 @@ export class Instructor {
       tap((res: any) => {
         this.coursesCache = res.data;
       })
+    );
+  }
+
+  getCourseById(courseId: string): Observable<any> {
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${this.token}`,
+    });
+    return this.http.get(`${this.baseUrl}/courses/${courseId}`, { headers });
+  }
+
+  updateCourse(courseId: string, body: any): Observable<any> {
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${this.token}`,
+    });
+    return this.http.put(`${this.baseUrl}/courses/${courseId}`, body, { headers }).pipe(
+      tap(() => { this.coursesCache = null; })
     );
   }
 

@@ -8,6 +8,8 @@ import { Courses } from './components/courses/courses';
 import { Student } from './components/student/student';
 import { Rating } from './components/rating/rating';
 import { Setting } from './components/setting/setting';
+import { EditCourse } from './components/edit-course/edit-course';
+import { CoursesV } from './components/coursesv/coursesv';
 
 @NgModule({
   declarations: [],
@@ -19,7 +21,9 @@ import { Setting } from './components/setting/setting';
     Courses,
     Student,
     Rating,
-    Setting
+    Setting,
+    EditCourse,
+    CoursesV
   ],
 })
 export class InstructorModule {}

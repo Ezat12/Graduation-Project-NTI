@@ -9,7 +9,7 @@ import { DataUser } from '../models/user';
 export class User {
   private userCache$ = new BehaviorSubject<DataUser | null>(null);
   private baseUrl = 'http://localhost:3000/api/v1';
-  private token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OGQyZWU4NTZmZjc1OGYxZWI1MDI2YjkiLCJpYXQiOjE3NjAyMDUwOTIsImV4cCI6MTc2MDM3Nzg5Mn0.VA5h_VS9iIbeH0eZRvO4qbpvw2S9zSUl1F01XS1iNgM';
+  private token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OGQyZWU4NTZmZjc1OGYxZWI1MDI2YjkiLCJpYXQiOjE3NjA1Mzk0NTIsImV4cCI6MTc2MDcxMjI1Mn0.v_LczTzCb98hxFEPoUZ2T06vSxrBqvMIy3ysfsDbGsY';
 
   constructor(private http : HttpClient) {};
 

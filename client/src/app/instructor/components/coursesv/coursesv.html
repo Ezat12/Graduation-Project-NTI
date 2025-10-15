@@ -1,0 +1,16 @@
+<div class="coursesv">
+  <h1>Courses (V)</h1>
+  @if (isLoading) { <p>Loading...</p> }
+  @if (!isLoading) {
+    <ul>
+      @for (c of courses; track c._id) {
+        <li>
+          <strong>{{ c.title }}</strong>
+          <button (click)="goEdit(c)">Edit</button>
+        </li>
+      }
+    </ul>
+  }
+</div>
+
+

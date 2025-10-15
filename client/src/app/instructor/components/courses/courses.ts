@@ -41,8 +41,7 @@ export class Courses implements OnInit {
   }
 
   editCourse(course: any) {
-    this.selectedCourse = course;
-    console.log('Editing course:', course);
+    this.router.navigate(['/instructor/dashboard/courses', course._id, 'edit']);
   }
 
   deleteCourse(course: any) {
