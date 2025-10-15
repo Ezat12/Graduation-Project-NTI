@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-contact',
@@ -13,7 +14,7 @@ import { CommonModule } from '@angular/common';
 export class Contact {
   contactForm: FormGroup;
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder  , private toastr: ToastrService ) {
     this.contactForm = this.fb.group({
       name: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
@@ -23,10 +24,10 @@ export class Contact {
 
   onSubmit() {
     if (this.contactForm.valid) {
-      alert('Message sent successfully!');
+      this.toastr.success('Message sent successfully!');
       this.contactForm.reset();
     } else {
-      alert('Please fill out all fields correctly.');
+      this.toastr.error('Please fill out all fields correctly.');
     }
   }
 }
