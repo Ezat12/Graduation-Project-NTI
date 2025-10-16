@@ -1,4 +1,5 @@
 const express = require("express");
+const mongoose = require("mongoose");
 const app = express();
 const cors = require("cors");
 const dotenv = require("dotenv");
@@ -39,3 +40,4 @@ const port = process.env.PORT || 3000;
 app.listen(3000, () => {
   console.log(`server is ready on port ${port}`);
 });
+

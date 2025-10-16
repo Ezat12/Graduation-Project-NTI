@@ -3,8 +3,6 @@ const expressAsyncHandler = require("express-async-handler");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken")
 const ApiError = require("../utils/apiError");
-
-
 //added for login
 const loginUser = expressAsyncHandler(async (req, res, next) => {
   const {email, password} = req.body
@@ -20,6 +18,8 @@ const loginUser = expressAsyncHandler(async (req, res, next) => {
   }
 
   const token = jwt.sign({userId: user._id}, process.env.SECRET_TOKEN, {expiresIn: "7d"})
+  // const token = jwt.sign({userId: user._id}, process.env.SECRET_TOKEN, {expiresIn: "7d"})
+
 
   res.status(200).json({
     status: "success",

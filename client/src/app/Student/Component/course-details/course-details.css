@@ -1,0 +1,233 @@
+/* 🎯 صفحة التفاصيل العامة */
+.course-details {
+  max-width: 1200px;
+  margin: 40px auto;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  font-family: 'Poppins', sans-serif;
+  color: #222;
+}
+
+/* 🔹 الهيدر */
+.course-header {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 25px;
+  align-items: center;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.08);
+  padding: 25px;
+}
+
+.course-header img {
+  width: 320px;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 10px;
+}
+
+.header-info {
+  flex: 1;
+}
+
+.header-info h1 {
+  font-size: 1.9rem;
+  margin-bottom: 8px;
+  color: #1a1a1a;
+}
+
+.header-info .instructor {
+  color: #666;
+  font-size: 0.95rem;
+  margin-bottom: 6px;
+}
+
+.header-info .level {
+  background: #f0f0f0;
+  display: inline-block;
+  padding: 5px 10px;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  margin-bottom: 12px;
+}
+
+.price {
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: #2196f3;
+}
+
+.price .free {
+  color: #43a047;
+}
+
+/* 🔹 الجسم الأساسي */
+.course-body {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 30px;
+}
+
+/* 🔸 المحتوى الرئيسي */
+.main-content {
+  flex: 2.2;
+  background: #fff;
+  padding: 25px;
+  border-radius: 12px;
+  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.05);
+}
+
+/* 🔹 التابات */
+.tabs {
+  display: flex;
+  border-bottom: 2px solid #eee;
+  margin-bottom: 20px;
+}
+
+.tabs button {
+  flex: 1;
+  padding: 12px 15px;
+  background: transparent;
+  border: none;
+  font-weight: 500;
+  color: #555;
+  cursor: pointer;
+  border-bottom: 3px solid transparent;
+  transition: all 0.3s;
+}
+
+.tabs button:hover {
+  color: #2196f3;
+}
+
+.tabs button.active {
+  color: #2196f3;
+  border-bottom-color: #2196f3;
+}
+
+/* 🔸 تبويب المحتوى */
+.tab-content h3 {
+  font-size: 1.2rem;
+  margin-bottom: 15px;
+  color: #222;
+}
+
+.tab-content ul {
+  list-style: none;
+  padding: 0;
+}
+
+.lecture {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.preview-badge {
+  background: #2196f3;
+  color: white;
+  font-size: 0.8rem;
+  padding: 4px 8px;
+  border-radius: 5px;
+}
+
+.tab-content li {
+  padding: 15px 0;
+  border-bottom: 1px solid #eee;
+}
+
+video {
+  width: 100%;
+  border-radius: 8px;
+  margin-top: 10px;
+}
+
+/* 🔹 السايدبار */
+.sidebar {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.card {
+  background: #fff;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+}
+
+.card h3 {
+  font-size: 1.1rem;
+  margin-bottom: 12px;
+  color: #222;
+  border-left: 4px solid #2196f3;
+  padding-left: 8px;
+}
+
+.card ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.card ul li {
+  padding: 6px 0;
+  border-bottom: 1px solid #eee;
+  font-size: 0.95rem;
+}
+
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.tag {
+  background: #e3f2fd;
+  color: #1565c0;
+  padding: 5px 10px;
+  border-radius: 6px;
+  font-size: 0.85rem;
+}
+
+.rating p {
+  font-size: 1.4rem;
+  font-weight: bold;
+  color: #ffa000;
+}
+
+.rating small {
+  color: #777;
+}
+
+/* 🔸 التحميل */
+.loading {
+  text-align: center;
+  font-size: 1.1rem;
+  color: #666;
+}
+
+/* 📱 استجابة الموبايل */
+@media (max-width: 900px) {
+  .course-body {
+    flex-direction: column;
+  }
+
+  .course-header img {
+    width: 100%;
+    height: auto;
+  }
+
+  .tabs button {
+    font-size: 0.9rem;
+    padding: 10px;
+  }
+
+  .header-info h1 {
+    font-size: 1.5rem;
+  }
+}

@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { ICourse } from '../Model/i-course';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -13,11 +12,20 @@ export class CourseService {
   constructor(private http: HttpClient) {}
 
   getCourses(): Observable<any> {
-
+     const token = localStorage.getItem('token')
     const headers = new HttpHeaders({
-      Authorization: `Bearer ${this.token}`
+      Authorization: `Bearer ${token}`
     });
 
     return this.http.get(this.apiUrl, { headers });
   }
+
+getCourseById(id: string): Observable<any> {
+  const token = localStorage.getItem('token'); 
+  const headers = new HttpHeaders({
+    Authorization: `Bearer ${token} `
+  });
+
+  return this.http.get(`${this.apiUrl}/${id}`, { headers });
+}
 }

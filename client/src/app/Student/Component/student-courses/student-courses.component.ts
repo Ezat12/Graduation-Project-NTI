@@ -3,46 +3,47 @@ import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, FormGroup } from '@angular/forms';
 import { CourseService } from '../../service/courses-service';
 import { CourseCard } from "../course-card/course-card";
+import { Router } from '@angular/router';
 
-interface ICategory {
-  _id: string;
-  name: string;
-}
+// interface ICategory {
+//   _id: string;
+//   name: string;
+// }
 
-interface IInstructor {
-  _id: string;
-  name: string;
-  email: string;
-  avatar?: string;
-}
+// interface IInstructor {
+//   _id: string;
+//   name: string;
+//   email: string;
+//   avatar?: string;
+// }
 
-interface ILecture {
-  _id: string;
-  title: string;
-  freePreview: boolean;
-  videoUrl: string;
-}
+// interface ILecture {
+//   _id: string;
+//   title: string;
+//   freePreview: boolean;
+//   videoUrl: string;
+// }
 
-interface ICourse {
-  _id: string;
-  title: string;
-  instructorId: IInstructor;
-  imageUrl: string;
-  description: string;
-  price: number;
-  category: ICategory[];
-  language: string[];
-  level: string;
-  objective: string[];
-  lectures: ILecture[];
-  enrollments: number;
-  reviewsCount: number;
-  rating: number;
-  createdAt: string;
-  updatedAt: string;
-  isFeatured?: boolean;
-  isEnrolled?: boolean;
-}
+// interface ICourse {
+//   _id: string;
+//   title: string;
+//   instructorId: IInstructor;
+//   imageUrl: string;
+//   description: string;
+//   price: number;
+//   category: ICategory[];
+//   language: string[];
+//   level: string;
+//   objective: string[];
+//   lectures: ILecture[];
+//   enrollments: number;
+//   reviewsCount: number;
+//   rating: number;
+//   createdAt: string;
+//   updatedAt: string;
+//   isFeatured?: boolean;
+//   isEnrolled?: boolean;
+// }
 
 @Component({
   selector: 'app-student-courses',
@@ -74,6 +75,8 @@ export class StudentCoursesComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    // console.log(localStorage.getItem('token'));
+
     this.service.getCourses().subscribe({
       next: (data: any) => {
         this.courses = data.data;
@@ -164,9 +167,10 @@ export class StudentCoursesComponent implements OnInit {
     );
   }
 
-  viewCourseDetails(course: ICourse): void {
-    console.log('View course details:', course);
-  }
+  //  viewCourseDetails(course: ICourse): void {
+  //    this.router.navigate(['/course', course._id]);
+  //   console.log('View course details:', course);
+  // }
 
   enrollInCourse(course: ICourse): void {
     console.log('Enroll in course:', course);

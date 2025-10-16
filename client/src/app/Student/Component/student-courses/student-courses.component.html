@@ -1,5 +1,5 @@
 <div class="courses-container">
-  <div class="courses-header">
+  <div class="courses-header ">
     <div class="header-content">
       <h1 class="page-title">Available Courses</h1>
       <p class="page-subtitle">Browse and enroll in our courses</p>
@@ -157,7 +157,9 @@
           <button class="empty-action-btn" (click)="resetFilters()">Reset Filters</button>
         </div>
         } @for (course of filteredCourses; track course._id) {
-        <app-course-card [course]="course"></app-course-card>
+        <app-course-card 
+        [course]="course">
+      </app-course-card>
         }
       </div>
       }

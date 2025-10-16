@@ -15,6 +15,7 @@ export class Contact {
   contactForm: FormGroup;
 
   constructor(private fb: FormBuilder  , private toastr: ToastrService ) {
+
     this.contactForm = this.fb.group({
       name: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
@@ -28,6 +29,7 @@ export class Contact {
       this.contactForm.reset();
     } else {
       this.toastr.error('Please fill out all fields correctly.');
+
     }
   }
 }

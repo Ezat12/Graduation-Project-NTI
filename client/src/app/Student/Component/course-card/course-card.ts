@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-course-card',
@@ -9,14 +10,22 @@ import { Component, Input } from '@angular/core';
 })
 export class CourseCard {
   @Input() course: any;
+   @Output() courseClicked = new EventEmitter<ICourse>();
 
-  constructor() {}
+  constructor(private router: Router) {}
+ 
+  //   onCardClick() {
+  //   this.courseClicked.emit(this.course);
+  // }
 
   onImageError(event: Event) {
     (event.target as HTMLImageElement).src = '/assets/default-course.jpg';
   }
 
-  viewCourseDetails(course: any) {}
+  viewCourseDetails(course: any) {
+  this.router.navigate(['/courses', course._id]);
+
+  }
 
   enrollInCourse(course: any) {}
 }
