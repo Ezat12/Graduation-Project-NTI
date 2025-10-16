@@ -1,0 +1,61 @@
+.about-hero {
+  background: linear-gradient(120deg, #f8fff8, #ffffff);
+  border-bottom: 2px solid #e6f4ea;
+}
+
+.about-hero h1 span {
+  color: #16a34a;
+}
+
+.about-hero h1 {
+  font-size: 2.8rem;
+  color: #1e1e1e;
+}
+
+h2 {
+  font-size: 2rem;
+  color: #1e1e1e;
+  position: relative;
+}
+
+h2::after {
+  content: "";
+  display: block;
+  width: 80px;
+  height: 3px;
+  background-color: #16a34a;
+  margin: 0.5rem auto 0;
+  border-radius: 2px;
+}
+
+.mission-section {
+  background-color: #f9fdf9;
+}
+
+.card {
+  border-radius: 16px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+}
+
+.card i {
+  background: #e6f4ea;
+  padding: 14px;
+  border-radius: 50%;
+  transition: all 0.3s ease;
+}
+
+.card:hover i {
+  background: #16a34a;
+  color: #fff;
+  transform: rotate(10deg);
+}
+
+.join-section {
+  background: linear-gradient(120deg, #e6f4ea, #ffffff);
+  border-top: 2px solid #e6f4ea;
+}
