@@ -1,12 +1,4 @@
-// export interface ICourse  {
-//   id: number;
-//   title: string;
-//   category: string;
-//   language: string;
-//   price: number;
-//   rating: number;
-//   image: string 
-// }
+
 
 interface ICategory {
   _id: string;
@@ -46,4 +38,5 @@ interface ICourse {
   updatedAt: string;
   isFeatured?: boolean;
   isEnrolled?: boolean;
+
 }

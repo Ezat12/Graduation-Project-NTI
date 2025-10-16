@@ -7,6 +7,7 @@ import { Login } from './Student/components/login/login';
 import { Register } from './Student/components/register/register';
 import { CourseDetails } from './Student/Component/course-details/course-details';
 
+
 export const routes: Routes = [
   {
     path: 'instructor',
@@ -20,4 +21,4 @@ export const routes: Routes = [
   { path: 'contact', component: Contact, title: 'Contact' },
   { path: '**', redirectTo: 'Contact' },
   { path: '', redirectTo: 'courses', pathMatch: 'full' },
-];
+]
