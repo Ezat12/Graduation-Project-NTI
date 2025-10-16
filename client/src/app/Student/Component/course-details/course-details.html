@@ -1,0 +1,139 @@
+<!-- <div class="course-details-page" *ngIf="!isLoading && course">
+  <div class="course-content">
+    <div class="course-header">
+      <img [src]="course.imageUrl" alt="Course Image" />
+      <div class="info">
+        <h2>{{ course.title }}</h2>
+        <p class="level">{{ course.level }}</p>
+        <p class="price">{{ course.price | currency:'USD' }}</p>
+      </div>
+    </div>
+
+    <div class="tabs">
+      <button [class.active]="activeTab === 'contents'" (click)="setActive('contents')">Contents</button>
+      <button [class.active]="activeTab === 'description'" (click)="setActive('description')">Description</button>
+    </div>
+
+    <div class="tab-content">
+      @if (activeTab === 'contents') {
+        <ul>
+          @for (lecture of course.lectures; track lecture.title) {
+            <li>
+              <h4>{{ lecture.title }}</h4>
+              <video
+                [src]="lecture.videoUrl"
+                controls
+                width="100%"
+                *ngIf="lecture.freePreview"
+              ></video>
+            </li>
+          }
+        </ul>
+      }
+
+      @if (activeTab === 'description') {
+        <p>{{ course.description }}</p>
+      }
+    </div>
+  </div>
+
+  <div class="sidebar">
+    <div class="card">
+      <h3>Objectives</h3>
+      <ul>
+        @for (obj of course.objective; track obj) {
+          <li>{{ obj }}</li>
+        }
+      </ul>
+    </div>
+  </div>
+</div> -->
+
+<div class="course-details">
+  @if (!isLoading && course) {
+    <div class="course-header">
+      <img [src]="course.imageUrl || '/assets/default-course.jpg'" alt="Course image" />
+      <div class="header-info">
+        <h1>{{ course.title }}</h1>
+        <p class="instructor">By {{ course.instructorId?.name || 'Unknown Instructor' }}</p>
+        <p class="level">Level: {{ course.level || 'All Levels' }}</p>
+        <div class="price">
+          @if (course.price === 0) {
+            <span class="free">Free</span>
+          } @else {
+            <span>{{ course.price | currency: 'USD' }}</span>
+          }
+        </div>
+      </div>
+    </div>
+
+    <div class="course-body">
+      <div class="main-content">
+        <div class="tabs">
+          <button [class.active]="activeTab === 'contents'" (click)="setActive('contents')">Contents</button>
+          <button [class.active]="activeTab === 'description'" (click)="setActive('description')">Description</button>
+        </div>
+
+        <div class="tab-content">
+          @if (activeTab === 'contents') {
+            <h3>Course Content</h3>
+            <ul>
+              @for (lecture of course.lectures; track lecture._id) {
+                <li>
+                  <div class="lecture">
+                    <h4>{{ lecture.title }}</h4>
+                    @if (lecture.freePreview) {
+                      <span class="preview-badge">Preview</span>
+                    }
+                  </div>
+                  @if (lecture.freePreview) {
+                    <video [src]="lecture.videoUrl" controls></video>
+                  }
+                </li>
+              } @empty {
+                <p>No lectures available yet.</p>
+              }
+            </ul>
+          }
+
+          @if (activeTab === 'description') {
+            <h3>About This Course</h3>
+            <p>{{ course.description }}</p>
+          }
+        </div>
+      </div>
+
+      <aside class="sidebar">
+        <div class="card">
+          <h3>Objectives</h3>
+          <ul>
+            @for (obj of course.objective; track obj) {
+              <li>{{ obj }}</li>
+            } @empty {
+              <li>No objectives available.</li>
+            }
+          </ul>
+        </div>
+
+        <div class="card">
+          <h3>Languages</h3>
+          <div class="tags">
+            @for (lang of course.language; track lang) {
+              <span class="tag">{{ lang }}</span>
+            } @empty {
+              <span class="tag">N/A</span>
+            }
+          </div>
+        </div>
+
+        <div class="card rating">
+          <h3>Rating</h3>
+          <p>{{ course.rating || 0 }}/5</p>
+          <small>{{ course.reviewsCount || 0 }} reviews</small>
+        </div>
+      </aside>
+    </div>
+  } @else {
+    <p class="loading">Loading course details...</p>
+  }
+</div>
