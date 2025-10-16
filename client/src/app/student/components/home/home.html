@@ -1,0 +1,163 @@
+<!-- First section (Hero) -->
+<section class="hero container py-5 text-center">
+  <div class="row align-items-center">
+    <div class="col-md-6 text-md-start text-center">
+      <h1 class="fw-bold">
+        Up Your <span class="text-success">Skills</span> To Advance Your
+        <span class="text-success">Career Path</span>
+      </h1>
+      <p class="mt-3 text-secondary">
+        Explore the world of programming with Weekend Code — learn, practice, and grow your
+        developer skills step by step
+      </p>
+      <div class="mt-4">
+        <a routerLink="/register" class="btn btn-success me-2">Get Started</a>
+        <a routerLink="/login" class="btn btn-outline-success">Get Free Trial</a>
+      </div>
+    </div>
+
+    <div class="col-md-6 mt-4 mt-md-0">
+      <img
+        src="/young-caucasian-man-wearing-student-600nw-2015570198.webp"
+        alt="Learning"
+        class="img-fluid rounded-circle shadow"
+      />
+    </div>
+  </div>
+</section>
+
+<!-- Second section (Popular Courses -unfinished-) -->
+<section class="container py-5">
+  <h2 class="text-center fw-bold mb-4">Our Most Popular Classes</h2>
+  <div class="courses-container">
+    @if (courses.length === 0) {
+    <div class="empty-state">
+      <svg class="empty-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"
+        ></path>
+      </svg>
+      <h3 class="empty-title">No courses found</h3>
+      <p class="empty-subtitle">Try adjusting your filters or search terms</p>
+    </div>
+    } @else {
+    <div class="courses-grid grid grid-cols-3 gap-4">
+      @for (course of courses.slice(0, 3); track course._id) {
+      <app-course-card [course]="course"></app-course-card>
+      }
+    </div>
+    }
+  </div>
+
+  <div class="text-center mt-4">
+    <button routerLink="courses" class="btn btn-outline-success px-4">Explore More</button>
+  </div>
+</section>
+
+<!-- Third section (Tutors -unfinished-) -->
+<section class="container py-5">
+  <h2 class="text-center fw-bold mb-4">Meet Our Expert Tutors</h2>
+  <div class="row g-4 justify-content-center tutors-section">
+    <!-- Tutor 1 -->
+    <div class="col-md-4 col-sm-6">
+      <div class="card tutor-card text-center shadow border-0">
+        <img
+          src="https://randomuser.me/api/portraits/men/32.jpg"
+          class="card-img-top tutor-img rounded-circle mx-auto mt-4"
+          alt="Tutor"
+        />
+        <div class="card-body">
+          <h5 class="card-title">Ahmed Mostafa</h5>
+          <p class="text-secondary mb-2">Full Stack Developer</p>
+          <div class="social-links">
+            <i class="fa-brands fa-facebook-f"></i>
+            <i class="fa-brands fa-twitter"></i>
+            <i class="fa-brands fa-linkedin"></i>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Tutor 2 -->
+    <div class="col-md-4 col-sm-6">
+      <div class="card tutor-card text-center shadow border-0">
+        <img
+          src="https://randomuser.me/api/portraits/women/44.jpg"
+          class="card-img-top tutor-img rounded-circle mx-auto mt-4"
+          alt="Tutor"
+        />
+        <div class="card-body">
+          <h5 class="card-title">Sara El-Sayed</h5>
+          <p class="text-secondary mb-2">UI/UX Designer</p>
+          <div class="social-links">
+            <i class="fa-brands fa-facebook-f"></i>
+            <i class="fa-brands fa-twitter"></i>
+            <i class="fa-brands fa-linkedin"></i>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-4 col-sm-6">
+      <div class="card tutor-card text-center shadow border-0">
+        <img
+          src="https://randomuser.me/api/portraits/men/76.jpg"
+          class="card-img-top tutor-img rounded-circle mx-auto mt-4"
+          alt="Tutor"
+        />
+        <div class="card-body">
+          <h5 class="card-title">Omar Ali</h5>
+          <p class="text-secondary mb-2">Mobile App Engineer</p>
+          <div class="social-links">
+            <i class="fa-brands fa-facebook-f"></i>
+            <i class="fa-brands fa-twitter"></i>
+            <i class="fa-brands fa-linkedin"></i>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="text-center mt-4">
+    <button routerLink="/courses" class="btn btn-outline-success px-4">Explore More</button>
+  </div>
+</section>
+
+<!-- Fourth section (Our Services) -->
+<section class="container py-5">
+  <h2 class="text-center fw-bold mb-4">Our Services</h2>
+  <div class="row g-4">
+    <div class="col-md-4">
+      <div class="card text-center border-0 shadow-sm p-4 h-100">
+        <i class="fa-solid fa-graduation-cap fa-2x text-success mb-3"></i>
+        <h5 class="fw-bold">Quality Education</h5>
+        <p class="text-secondary">Get access to top-quality materials and expert mentorship.</p>
+      </div>
+    </div>
+
+    <div class="col-md-4">
+      <div class="card text-center border-0 shadow-sm p-4 h-100">
+        <i class="fa-solid fa-laptop-code fa-2x text-success mb-3"></i>
+        <h5 class="fw-bold">Online Learning</h5>
+        <p class="text-secondary">
+          Learn from anywhere with our fully remote and interactive platform.
+        </p>
+      </div>
+    </div>
+
+    <div class="col-md-4">
+      <div class="card text-center border-0 shadow-sm p-4 h-100">
+        <i class="fa-solid fa-users fa-2x text-success mb-3"></i>
+        <h5 class="fw-bold">Community Support</h5>
+        <p class="text-secondary">Join a growing community of learners and instructors.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="text-center mt-4">
+    <button class="btn btn-outline-success px-4">Explore More</button>
+  </div>
+</section>

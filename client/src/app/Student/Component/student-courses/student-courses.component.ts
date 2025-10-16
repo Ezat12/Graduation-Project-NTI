@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, FormGroup } from '@angular/forms';
 import { CourseService } from '../../service/courses-service';
+import { CourseCard } from "../course-card/course-card";
 
 interface ICategory {
   _id: string;
@@ -46,7 +47,7 @@ interface ICourse {
 @Component({
   selector: 'app-student-courses',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule, CourseCard],
   templateUrl: './student-courses.component.html',
   styleUrls: ['./student-courses.component.css']
 })
@@ -54,12 +55,12 @@ export class StudentCoursesComponent implements OnInit {
   courses: ICourse[] = [];
   filteredCourses: ICourse[] = [];
   isLoading = true;
-  
+
   categories: string[] = [];
   languages: string[] = [];
   levels: string[] = ['Beginner', 'Intermediate', 'Advanced', 'All Levels'];
   selectedLevels: string[] = [];
-  
+
   filterForm: FormGroup;
 
   constructor(private service: CourseService, private fb: FormBuilder) {
@@ -88,7 +89,7 @@ export class StudentCoursesComponent implements OnInit {
   }
 
   extractFilterOptions(): void {
-    const allCategories = this.courses.flatMap(course => 
+    const allCategories = this.courses.flatMap(course =>
       course.category?.map(cat => cat.name) || []
     );
     this.categories = [...new Set(allCategories)];
@@ -101,20 +102,20 @@ export class StudentCoursesComponent implements OnInit {
     const { category, language, rating, minPrice, maxPrice } = this.filterForm.value;
 
     this.filteredCourses = this.courses.filter(course => {
-      const categoryMatch = !category || 
+      const categoryMatch = !category ||
         course.category?.some(cat => cat.name === category);
-      
-      const languageMatch = !language || 
+
+      const languageMatch = !language ||
         course.language?.includes(language);
-      
+
       const ratingMatch = !rating || course.rating >= +rating;
       const minPriceMatch = !minPrice || course.price >= +minPrice;
       const maxPriceMatch = !maxPrice || course.price <= +maxPrice;
-      
-      const levelMatch = this.selectedLevels.length === 0 || 
+
+      const levelMatch = this.selectedLevels.length === 0 ||
                          this.selectedLevels.includes(course.level);
 
-      return categoryMatch && languageMatch && ratingMatch && 
+      return categoryMatch && languageMatch && ratingMatch &&
              minPriceMatch && maxPriceMatch && levelMatch;
     });
   }

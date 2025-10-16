@@ -9,16 +9,18 @@ import { Rating } from './components/rating/rating';
 import { Setting } from './components/setting/setting';
 import { EditCourse } from './components/edit-course/edit-course';
 import { CoursesV } from './components/coursesv/coursesv';
+import { instructorGuard } from './guard/instructor-guard';
 
 const routes: Routes = [
   {
     path: 'dashboard',
     component: Dashboard,
+    canActivate: [instructorGuard],
     children: [
       {
         path: '',
         redirectTo: 'home',
-        pathMatch: 'full'
+        pathMatch: 'full',
       },
       {
         path: 'home',

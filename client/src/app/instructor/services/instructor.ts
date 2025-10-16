@@ -2,11 +2,10 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, of, tap } from 'rxjs';
 
-
 interface Category {
-  _id : string,
-  name : string,
-  description?: string,
+  _id: string;
+  name: string;
+  description?: string;
 }
 
 @Injectable({
@@ -14,8 +13,7 @@ interface Category {
 })
 export class Instructor {
   private baseUrl = 'http://localhost:3000/api/v1';
-  private token =
-    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OGQyZWU4NTZmZjc1OGYxZWI1MDI2YjkiLCJpYXQiOjE3NjA1Mzk0NTIsImV4cCI6MTc2MDcxMjI1Mn0.v_LczTzCb98hxFEPoUZ2T06vSxrBqvMIy3ysfsDbGsY';
+  private token = localStorage.getItem('token') || '';
 
   private coursesCache: any[] | null = null;
 
@@ -49,24 +47,26 @@ export class Instructor {
       Authorization: `Bearer ${this.token}`,
     });
     return this.http.put(`${this.baseUrl}/courses/${courseId}`, body, { headers }).pipe(
-      tap(() => { this.coursesCache = null; })
+      tap(() => {
+        this.coursesCache = null;
+      })
     );
   }
 
-  getStudentToInstructor() : Observable<any> {
+  getStudentToInstructor(): Observable<any> {
     const headers = new HttpHeaders({
       Authorization: `Bearer ${this.token}`,
     });
 
-    return this.http.get(`${this.baseUrl}/studentCourse/instructor/students`, { headers })
+    return this.http.get(`${this.baseUrl}/studentCourse/instructor/students`, { headers });
   }
 
-  getReviewsInstructor() : Observable<any> {
+  getReviewsInstructor(): Observable<any> {
     const headers = new HttpHeaders({
       Authorization: `Bearer ${this.token}`,
     });
 
-    return this.http.get(`${this.baseUrl}/reviews`, { headers })
+    return this.http.get(`${this.baseUrl}/reviews`, { headers });
   }
 
   getTimeSince(dateString: string): string {
@@ -77,10 +77,10 @@ export class Instructor {
 
     const seconds = Math.floor(diffMs / 1000);
     const minutes = Math.floor(seconds / 60);
-    const hours   = Math.floor(minutes / 60);
-    const days    = Math.floor(hours / 24);
-    const months  = Math.floor(days / 30);
-    const years   = Math.floor(days / 365);
+    const hours = Math.floor(minutes / 60);
+    const days = Math.floor(hours / 24);
+    const months = Math.floor(days / 30);
+    const years = Math.floor(days / 365);
 
     if (years > 0) return `${years} year${years > 1 ? 's' : ''} ago`;
     if (months > 0) return `${months} month${months > 1 ? 's' : ''} ago`;
@@ -113,7 +113,7 @@ export class Instructor {
     return this.http.post(`${this.baseUrl}/uploads/single`, formData, { headers });
   }
 
-  getAllCategory() : Observable<Category[]> {
+  getAllCategory(): Observable<Category[]> {
     const headers = new HttpHeaders({
       Authorization: `Bearer ${this.token}`,
     });

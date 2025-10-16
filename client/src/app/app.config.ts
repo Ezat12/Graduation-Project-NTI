@@ -1,4 +1,9 @@
-import { ApplicationConfig, importProvidersFrom, provideBrowserGlobalErrorListeners, provideZoneChangeDetection } from '@angular/core';
+import {
+  ApplicationConfig,
+  importProvidersFrom,
+  provideBrowserGlobalErrorListeners,
+  provideZoneChangeDetection,
+} from '@angular/core';
 import { provideRouter } from '@angular/router';
 import { provideHttpClient } from '@angular/common/http';
 import { provideToastr } from 'ngx-toastr';
@@ -26,7 +31,7 @@ export const appConfig: ApplicationConfig = {
       enableHtml: true,
       toastClass: 'ngx-toastr',
       titleClass: 'toast-title',
-      messageClass: 'toast-message'
-    })
-  ]
+      messageClass: 'toast-message',
+    }),
+  ],
 };
