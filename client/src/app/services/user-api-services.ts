@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { catchError, Observable, throwError } from 'rxjs';
 // import { Iuser } from '../student/modules/iuser';
 import { Iuser } from '../Student/Model/i-user';
 import { environment } from '../../environments/environment';
@@ -55,5 +55,46 @@ export class UserApiServices {
     return this.httpClient.get<any>(`${this.apiURL}/studentCourse`, {
       headers: header,
     });
+  }
+
+  getProfile(): Observable<any> {
+    const token = localStorage.getItem('token');
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`,
+    });
+    return this.httpClient.get(`${this.apiURL}/auth/me`, { headers }).pipe(
+      catchError((error) => {
+        console.error('Error fetching profile:', error);
+        return throwError(() => error);
+      })
+    );
+  }
+
+  updateProfile(data: any): Observable<Iuser> {
+    const token = localStorage.getItem('token');
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`,
+      'Content-Type': 'application/json',
+    });
+    return this.httpClient.put<Iuser>(`${this.apiURL}/auth/update-me`, data, { headers }).pipe(
+      catchError((error) => {
+        console.error('Error updating profile:', error);
+        return throwError(() => error);
+      })
+    );
+  }
+
+  changePassword(data: { currentPassword: string; newPassword: string }): Observable<any> {
+    const token = localStorage.getItem('token');
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`,
+      'Content-Type': 'application/json',
+    });
+    return this.httpClient.patch(`${this.apiURL}/auth/change-password`, data, { headers }).pipe(
+      catchError((error) => {
+        console.error('Error changing password:', error);
+        return throwError(() => error);
+      })
+    );
   }
 }

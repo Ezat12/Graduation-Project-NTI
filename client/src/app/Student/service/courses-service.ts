@@ -8,6 +8,7 @@ import { Observable } from 'rxjs';
 })
 export class CourseService {
   private apiUrl = 'http://localhost:3000/api/v1/courses';
+  private apiUrlPurchase = 'http://localhost:3000/api/v1/orders/purchase';
   private token = localStorage.getItem('token') || '';
 
   constructor(private http: HttpClient) {}
@@ -26,5 +27,15 @@ export class CourseService {
     });
 
     return this.http.get(`${this.apiUrl}/${id}`, { headers });
+  }
+
+  purchaseCourse(courseId: string): Observable<any> {
+    console.log('Purchasing course with ID:', courseId);
+    console.log('Purchasing course with ID:', this.token);
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${this.token}`,
+    });
+
+    return this.http.post(`${this.apiUrlPurchase}/${courseId}`, { courseId }, { headers });
   }
 }

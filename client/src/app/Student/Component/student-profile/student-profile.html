@@ -1,0 +1,113 @@
+<div class="profile-wrapper">
+  @if (isLoading) {
+  <div class="loading">Loading profile...</div>
+  } @else if (user) {
+  <div class="profile-card">
+    <!-- Header -->
+    <div class="profile-header">
+      <div class="avatar">
+        <img
+          src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTnYa7WPSH4QNQHFr_SEaeOaK9Mg4zEMrBsEw&s"
+          alt="User Avatar"
+        />
+      </div>
+      <div class="user-info">
+        <h2>{{ user.name }}</h2>
+        <p class="email">{{ user.email }}</p>
+        <span class="role-badge">{{ user.role | titlecase }}</span>
+      </div>
+    </div>
+
+    <!-- Extra Info -->
+    <div class="extra-info">
+      <p><strong>Active:</strong> @if(user.isActive) { Yes } @else { No }</p>
+      <p><strong>Joined:</strong> {{ user.createdAt | date : 'mediumDate' }}</p>
+    </div>
+
+    <!-- Action Buttons -->
+    <div class="action-buttons">
+      <button (click)="toggleEdit()">Edit Profile</button>
+      <button (click)="togglePassword()">Change Password</button>
+    </div>
+
+    <!-- Edit Profile Form -->
+    @if (editMode) {
+    <form [formGroup]="editForm" (ngSubmit)="saveProfile()" class="edit-form">
+      <div class="form-row">
+        <div class="form-group">
+          <label>Name</label>
+          <input formControlName="name" type="text" />
+          @if (editForm.get('name')?.touched && editForm.get('name')?.errors) {
+          <div class="error-message">
+            @if (editForm.get('name')?.errors?.['required']) {
+            <span>Name is required</span>
+            } @if (editForm.get('name')?.errors?.['minlength']) {
+            <span>Name must be at least 2 characters</span>
+            }
+          </div>
+          }
+        </div>
+      </div>
+      <div class="form-buttons">
+        <button type="submit" [disabled]="editForm.invalid">Save</button>
+        <button type="button" (click)="toggleEdit()">Cancel</button>
+      </div>
+    </form>
+    }
+
+    <!-- Change Password Form -->
+    @if (passwordMode) {
+    <form [formGroup]="passwordForm" (ngSubmit)="changePassword()" class="password-form">
+      <div class="form-row">
+        <div class="form-group">
+          <label>Current Password</label>
+          <input formControlName="currentPassword" type="password" />
+          @if (passwordForm.get('currentPassword')?.touched &&
+          passwordForm.get('currentPassword')?.errors) {
+          <div class="error-message">
+            @if (passwordForm.get('currentPassword')?.errors?.['required']) {
+            <span>Current password is required</span>
+            }
+          </div>
+          }
+        </div>
+        <div class="form-group">
+          <label>New Password</label>
+          <input formControlName="newPassword" type="password" />
+          @if (passwordForm.get('newPassword')?.touched && passwordForm.get('newPassword')?.errors)
+          {
+          <div class="error-message">
+            @if (passwordForm.get('newPassword')?.errors?.['required']) {
+            <span>New password is required</span>
+            } @if (passwordForm.get('newPassword')?.errors?.['minlength']) {
+            <span>Password must be at least 6 characters</span>
+            }
+          </div>
+          }
+        </div>
+        <div class="form-group">
+          <label>Confirm Password</label>
+          <input formControlName="confirmPassword" type="password" />
+          @if (passwordForm.get('confirmPassword')?.touched &&
+          passwordForm.get('confirmPassword')?.errors) {
+          <div class="error-message">
+            @if (passwordForm.get('confirmPassword')?.errors?.['required']) {
+            <span>Confirm password is required</span>
+            }
+          </div>
+          }
+        </div>
+      </div>
+      <div class="form-buttons">
+        <button type="submit" [disabled]="passwordForm.invalid">Save</button>
+        <button type="button" (click)="togglePassword()">Cancel</button>
+      </div>
+    </form>
+    }
+  </div>
+  } @else {
+  <div class="error">
+    <p>User not found. Please <a routerLink="/login">login</a> again.</p>
+  </div>
+  }
+</div>

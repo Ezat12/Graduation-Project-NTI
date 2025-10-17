@@ -6,28 +6,31 @@ const asyncErrorHandler = require("express-async-handler");
 const ApiError = require("../utils/apiError");
 const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 
-const createOrder = async (session) => {
-  const user = await User.findOne({ email: session.customer_email });
-  const course = await Course.findById(session.client_reference_id);
-  const courseStudent = await CourseStudent.findOne({ userId: user._id });
+const createOrder = asyncErrorHandler(async (req, res, next) => {
+  const user = await User.findById(req.user._id);
+  const course = await Course.findById(req.params.courseId);
+  let courseStudent = await CourseStudent.findOne({ userId: user._id });
 
   console.log("Creating order for user:", user);
   console.log("Course details:", course);
   console.log("CourseStudent details:", courseStudent);
 
-  const price = session.amount_total / 100;
+  const price = course.price;
 
   if (!user || !course) {
-    return res
-      .status(404)
-      .json({ message: "User, Course or Enrollment not found" });
+    return next(new ApiError("User or Course not found", 404));
   }
 
-  const isEnrolled = courseStudent.courses.includes(course._id);
+  if (!courseStudent) {
+    courseStudent = await CourseStudent.create({
+      userId: user._id,
+      courses: [],
+    });
+  }
+
+  const isEnrolled = courseStudent?.courses?.includes(course._id);
   if (isEnrolled) {
-    return res
-      .status(400)
-      .json({ message: "User is already enrolled in this course" });
+    return next(new ApiError("User is already enrolled in this course", 400));
   }
 
   // Create the order
@@ -43,8 +46,8 @@ const createOrder = async (session) => {
   await courseStudent.save();
   await course.save();
 
-  return order;
-};
+  res.status(201).json({ status: "success", data: order });
+});
 
 const getCheckoutSession = asyncErrorHandler(async (req, res, next) => {
   const idCourse = req.params.courseId;
@@ -122,6 +125,7 @@ const webhookCheckout = asyncErrorHandler(async (req, res, next) => {
 });
 
 module.exports = {
+  createOrder,
   getCheckoutSession,
   webhookCheckout,
 };

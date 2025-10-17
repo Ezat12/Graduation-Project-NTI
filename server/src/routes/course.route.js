@@ -17,24 +17,27 @@ const { updateCategoryValidator } = require("../validations/categoryValidator");
 
 const router = express.Router();
 
-router.use(protectAuth);
-
-router.route("/").post(courseValidationRules, createCourse).get(getCourses);
+// router.use(protectAuth);
+//
+router
+  .route("/")
+  .post(courseValidationRules, protectAuth, createCourse)
+  .get(getCourses);
 
 router
   .route("/:id")
   .get(getCourseById)
-  .put(updateCategoryValidator, updateCourse)
-  .delete(deleteCourse);
+  .put(updateCategoryValidator, protectAuth, updateCourse)
+  .delete(protectAuth, deleteCourse);
 
-router.get("/instructor/my-courses", getInstructorCourses);
+router.get("/instructor/my-courses", protectAuth, getInstructorCourses);
 // router.get("/student/my-courses", getCoursesStudent);
 
-router.post("/:courseId/lectures", addLecture);
+router.post("/:courseId/lectures", protectAuth, addLecture);
 
 router
   .route("/:courseId/lectures/:lectureId")
-  .put(updateLecture)
-  .delete(deleteLecture);
+  .put(protectAuth, updateLecture)
+  .delete(protectAuth, deleteLecture);
 
 module.exports = router;

@@ -106,11 +106,7 @@
         <button routerLink="/details/{{ course._id }}" class="action-btn details-btn">
           Details
         </button>
-        <button
-          class="action-btn enroll-btn"
-          (click)="purchaseCourse(course)"
-          [disabled]="course.isEnrolled"
-        >
+        <button class="action-btn enroll-btn" (click)="purchaseCourse(course)">
           Purchase Course
         </button>
       </div>

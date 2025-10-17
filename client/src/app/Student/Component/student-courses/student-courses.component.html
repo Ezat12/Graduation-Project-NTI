@@ -157,10 +157,248 @@
           <button class="empty-action-btn" (click)="resetFilters()">Reset Filters</button>
         </div>
         } @for (course of filteredCourses; track course._id) {
-        <app-course-card [course]="course"></app-course-card>
+        <app-course-card [course]="course" (purchase)="onPurchase($event)"></app-course-card>
         }
       </div>
       }
     </div>
   </div>
 </div>
+
+<!-- Payment Modal -->
+@if (showPaymentForm && selectedCourse) {
+<div class="payment-modal">
+  <div class="modal-overlay" (click)="closePaymentForm()"></div>
+
+  <div class="modal-content">
+    <!-- Header -->
+    <div class="modal-header">
+      <h2>Complete Your Purchase</h2>
+      <button type="button" class="close-btn" (click)="closePaymentForm()">
+        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M6 18L18 6M6 6l12 12"
+          ></path>
+        </svg>
+      </button>
+    </div>
+
+    <!-- Course Summary -->
+    <div class="course-summary">
+      <div class="summary-header">
+        <h3>Order Summary</h3>
+      </div>
+      <div class="summary-content">
+        <div class="course-info">
+          <img
+            [src]="selectedCourse?.imageUrl || '/assets/default-course.jpg'"
+            alt="Course image"
+            class="course-thumbnail"
+          />
+          <div class="course-details">
+            <h4>{{ selectedCourse?.title }}</h4>
+            <p class="instructor">By {{ selectedCourse?.instructorId?.name }}</p>
+          </div>
+        </div>
+        <div class="price-breakdown">
+          <div class="price-item">
+            <span>Course price</span>
+            <span>{{ selectedCourse?.price | currency : 'USD' : 'symbol' : '1.0-0' }}</span>
+          </div>
+          <div class="price-item">
+            <span>Platform fee</span>
+            <span>$0.00</span>
+          </div>
+          <div class="price-item total">
+            <span>Total</span>
+            <span>{{ selectedCourse?.price | currency : 'USD' : 'symbol' : '1.0-0' }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Payment Form -->
+    <form [formGroup]="paymentForm" (ngSubmit)="pay()" class="payment-form">
+      <!-- Card Information -->
+      <div class="form-section">
+        <h3>Card Information</h3>
+
+        <!-- Card Number -->
+        <div class="form-group">
+          <label class="form-label">Card Number</label>
+          <div class="card-input-wrapper">
+            <input
+              type="text"
+              formControlName="cardNumber"
+              class="form-input card-number"
+              placeholder="1234 5678 9012 3456"
+              maxlength="19"
+              (input)="formatCardNumber($event)"
+              [class.error]="cardNumber?.touched && cardNumber?.invalid"
+            />
+            <div class="card-icons">
+              <div class="card-icon visa">💳</div>
+              <div class="card-icon mastercard">💳</div>
+              <div class="card-icon amex">💳</div>
+            </div>
+          </div>
+          <div class="error-messages" *ngIf="cardNumber?.touched && cardNumber?.invalid">
+            <div class="error-text" *ngIf="cardNumber?.errors?.['required']">
+              Card number is required
+            </div>
+            <div
+              class="error-text"
+              *ngIf="cardNumber?.errors?.['pattern'] || cardNumber?.errors?.['minlength']"
+            >
+              Please enter a valid 16-digit card number
+            </div>
+          </div>
+        </div>
+
+        <!-- Expiry and CVC -->
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">Expiry Date</label>
+            <input
+              type="text"
+              formControlName="expiryDate"
+              class="form-input"
+              placeholder="MM/YY"
+              maxlength="5"
+              (input)="formatExpiryDate($event)"
+              [class.error]="expiryDate?.touched && expiryDate?.invalid"
+            />
+            <div class="error-messages" *ngIf="expiryDate?.touched && expiryDate?.invalid">
+              <div class="error-text" *ngIf="expiryDate?.errors?.['required']">
+                Expiry date is required
+              </div>
+              <div class="error-text" *ngIf="expiryDate?.errors?.['pattern']">
+                Please enter a valid expiry date (MM/YY)
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">CVC</label>
+            <input
+              type="text"
+              formControlName="cvc"
+              class="form-input"
+              placeholder="123"
+              maxlength="4"
+              (input)="formatCVC($event)"
+              [class.error]="cvc?.touched && cvc?.invalid"
+            />
+            <div class="error-messages" *ngIf="cvc?.touched && cvc?.invalid">
+              <div class="error-text" *ngIf="cvc?.errors?.['required']">CVC is required</div>
+              <div class="error-text" *ngIf="cvc?.errors?.['pattern']">
+                Please enter a valid 3 or 4 digit CVC
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Cardholder Information -->
+      <div class="form-section">
+        <h3>Cardholder Information</h3>
+
+        <!-- Full Name -->
+        <div class="form-group">
+          <label class="form-label">Full Name on Card</label>
+          <input
+            type="text"
+            formControlName="cardholderName"
+            class="form-input"
+            placeholder="John Doe"
+            [class.error]="cardholderName?.touched && cardholderName?.invalid"
+          />
+          <div class="error-messages" *ngIf="cardholderName?.touched && cardholderName?.invalid">
+            <div class="error-text" *ngIf="cardholderName?.errors?.['required']">
+              Cardholder name is required
+            </div>
+            <div class="error-text" *ngIf="cardholderName?.errors?.['minlength']">
+              Name must be at least 2 characters
+            </div>
+            <div class="error-text" *ngIf="cardholderName?.errors?.['pattern']">
+              Name can only contain letters and spaces
+            </div>
+          </div>
+        </div>
+
+        <!-- Country -->
+        <div class="form-group">
+          <label class="form-label">Country or Region</label>
+          <select
+            formControlName="country"
+            class="form-select"
+            [class.error]="country?.touched && country?.invalid"
+          >
+            <option value="">Select Country</option>
+            <option value="US">United States</option>
+            <option value="CA">Canada</option>
+            <option value="GB">United Kingdom</option>
+            <option value="AU">Australia</option>
+            <option value="DE">Germany</option>
+            <option value="FR">France</option>
+            <option value="IN">India</option>
+            <option value="EG">Egypt</option>
+            <option value="SA">Saudi Arabia</option>
+            <option value="AE">United Arab Emirates</option>
+          </select>
+          <div class="error-messages" *ngIf="country?.touched && country?.invalid">
+            <div class="error-text" *ngIf="country?.errors?.['required']">Country is required</div>
+          </div>
+        </div>
+
+        <!-- Email (Optional) -->
+        <div class="form-group">
+          <label class="form-label">Email Address <span class="optional">(Optional)</span></label>
+          <input
+            type="email"
+            formControlName="email"
+            class="form-input"
+            placeholder="your@email.com"
+            [class.error]="email?.touched && email?.invalid"
+          />
+          <div class="error-messages" *ngIf="email?.touched && email?.invalid">
+            <div class="error-text" *ngIf="email?.errors?.['email']">
+              Please enter a valid email address
+            </div>
+          </div>
+          <div class="helper-text">Receipt will be sent to this email</div>
+        </div>
+      </div>
+
+      <!-- Security Notice -->
+      <div class="security-notice">
+        <div class="lock-icon">🔒</div>
+        <div class="security-text">
+          <strong>Your payment is secure</strong>
+          <p>We use industry-standard encryption to protect your information</p>
+        </div>
+      </div>
+
+      <!-- Submit Button -->
+      <div class="form-actions">
+        <button
+          type="submit"
+          class="pay-button"
+          [class.disabled]="paymentForm.invalid"
+          [attr.disabled]="paymentForm.invalid ? true : null"
+        >
+          Pay {{ selectedCourse?.price | currency : 'USD' : 'symbol' : '1.0-0' }}
+        </button>
+
+        <p class="payment-notice">
+          By completing your purchase you agree to our
+          <a href="#" class="link">Terms of Service</a>
+        </p>
+      </div>
+    </form>
+  </div>
+</div>
+}
