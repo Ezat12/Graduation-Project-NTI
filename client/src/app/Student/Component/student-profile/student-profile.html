@@ -1,0 +1,79 @@
+<div class="profile-wrapper">
+  @if (isLoading) {
+    <div class="loading">Loading profile...</div>
+  } @else if (user) {
+    <div class="profile-card">
+      <!-- Header -->
+      <div class="profile-header">
+        <div class="avatar">
+          <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTnYa7WPSH4QNQHFr_SEaeOaK9Mg4zEMrBsEw&s" alt="User Avatar" />
+        </div>
+        <div class="user-info">
+          <h2>{{ user.name }}</h2>
+          <p class="email">{{ user.email }}</p>
+          <span class="role-badge">{{ user.role | titlecase }}</span>
+        </div>
+      </div>
+
+      <!-- Extra Info -->
+      <div class="extra-info">
+        <p><strong>Active:</strong> @if(user.isActive) { Yes } @else { No }</p>
+        <p><strong>Joined:</strong> {{ user.createdAt | date:'mediumDate' }}</p>
+      </div>
+
+      <!-- Action Buttons -->
+      <div class="action-buttons">
+        <button (click)="toggleEdit()">Edit Profile</button>
+        <button (click)="togglePassword()">Change Password</button>
+      </div>
+
+      <!-- Edit Profile Form -->
+      @if (editMode) {
+        <form [formGroup]="editForm" (ngSubmit)="saveProfile()" class="edit-form">
+          <div class="form-row">
+            <div class="form-group">
+              <label>Name</label>
+              <input formControlName="name" type="text" />
+            </div>
+            <div class="form-group">
+              <label>Email</label>
+              <input formControlName="email" type="email" />
+            </div>
+          </div>
+          <div class="form-buttons">
+            <button type="submit">Save</button>
+            <button type="button" (click)="toggleEdit()">Cancel</button>
+          </div>
+        </form>
+      }
+
+      <!-- Change Password Form -->
+      @if (passwordMode) {
+        <form [formGroup]="passwordForm" (ngSubmit)="changePassword()" class="password-form">
+          <div class="form-row">
+            <div class="form-group">
+              <label>Current Password</label>
+              <input formControlName="currentPassword" type="password" />
+            </div>
+            <div class="form-group">
+              <label>New Password</label>
+              <input formControlName="newPassword" type="password" />
+            </div>
+            <div class="form-group">
+              <label>Confirm Password</label>
+              <input formControlName="confirmPassword" type="password" />
+            </div>
+          </div>
+          <div class="form-buttons">
+            <button type="submit">Save</button>
+            <button type="button" (click)="togglePassword()">Cancel</button>
+          </div>
+        </form>
+      }
+    </div>
+  } @else {
+    <div class="error">
+      <p>User not found. Please <a routerLink="/login">login</a> again.</p>
+    </div>
+  }
+</div>

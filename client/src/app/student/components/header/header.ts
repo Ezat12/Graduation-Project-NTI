@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { InstructorRoutingModule } from '../../../instructor/instructor-routing-module';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-header',
@@ -8,13 +9,18 @@ import { InstructorRoutingModule } from '../../../instructor/instructor-routing-
   styleUrl: './header.css',
 })
 export class Header {
-  constructor() {}
+  constructor(private router:Router) {}
 
   logout() {
     localStorage.removeItem('token');
+     this.router.navigate(['/']);
   }
 
   get isLoggedIn(): boolean {
     return !!localStorage.getItem('token');
+  }
+
+  goToProfile(){
+    this.router.navigate(['/student-profile'])
   }
 }

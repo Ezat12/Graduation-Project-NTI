@@ -6,6 +6,7 @@ import { Home } from './Student/components/home/home';
 import { Login } from './Student/components/login/login';
 import { Register } from './Student/components/register/register';
 import { CourseDetails } from './Student/Component/course-details/course-details';
+import { StudentProfile } from './Student/Component/student-profile/student-profile';
 
 
 export const routes: Routes = [
@@ -16,9 +17,10 @@ export const routes: Routes = [
   { path: '', component: Home, title: 'Home Page' },
   { path: 'login', component: Login, title: 'Login Page' },
   { path: 'register', component: Register, title: 'Sign Up Page' },
-{ path: 'courses', component: StudentCoursesComponent, title: 'Courses' },
+   { path: 'courses', component: StudentCoursesComponent, title: 'Courses' },
     { path: 'courses/:id', component: CourseDetails, title: 'CourseDetails' },
   { path: 'contact', component: Contact, title: 'Contact' },
+   {path:'student-profile',component:StudentProfile,title:'StudentProfile'},
   { path: '**', redirectTo: 'Contact' },
-  { path: '', redirectTo: 'courses', pathMatch: 'full' },
+  { path: '', redirectTo: 'courses', pathMatch: 'full' }
 ]
