@@ -5,6 +5,7 @@ import { StudentCoursesComponent } from './Student/Component/student-courses/stu
 import { Home } from './Student/components/home/home';
 import { Login } from './Student/components/login/login';
 import { Register } from './Student/components/register/register';
+import { MyCourses } from './Student/Component/my-courses/my-courses';
 
 export const routes: Routes = [
   {
@@ -17,6 +18,7 @@ export const routes: Routes = [
 
   { path: 'courses', component: StudentCoursesComponent, title: 'Courses' },
   { path: 'contact', component: Contact, title: 'Contact' },
+  { path: 'my-courses', component: MyCourses, title: 'My Courses' },
   { path: '**', redirectTo: 'Contact' },
   { path: '', redirectTo: 'courses', pathMatch: 'full' },
 ];

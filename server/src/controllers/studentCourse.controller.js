@@ -8,9 +8,9 @@ const apiFeatures = require("../utils/apiFeature");
 exports.addCourseToStudent = asyncHandler(async (req, res, next) => {
   const { courseId } = req.params;
   const userId = req.user._id;
-  
-  console.log('Adding course to student:', { courseId, userId });
-  
+
+  console.log("Adding course to student:", { courseId, userId });
+
   let studentCourse = await StudentCourse.findOne({ userId });
 
   if (!studentCourse) {
@@ -25,30 +25,27 @@ exports.addCourseToStudent = asyncHandler(async (req, res, next) => {
   }
 
   await studentCourse.save();
-  
+
   const populatedStudentCourse = await StudentCourse.findById(studentCourse._id)
-    .populate('userId', 'name email')
-    .populate('courses', 'title description price');
-  
+    .populate("userId", "name email")
+    .populate("courses", "title description price");
+
   res.status(200).json({
-    status: 'success',
-    message: 'Course added to student successfully',
-    data: populatedStudentCourse
+    status: "success",
+    message: "Course added to student successfully",
+    data: populatedStudentCourse,
   });
 });
 
 exports.getStudentCourses = asyncHandler(async (req, res, next) => {
-  const sc = await StudentCourse.find({userId : req.user._id}).populate("courses");
+  const sc = await StudentCourse.find({ userId: req.user._id }).populate(
+    "courses"
+  );
 
-  // if (!sc || sc.length === 0) {
-  //   return next(new ApiError("Student not found", 404));
-  // }
-
-  return res.status(200).json({status : "success" , data : sc});
+  return res.status(200).json({ status: "success", data: sc });
 });
 
 exports.getAllStudentToInstructor = asyncHandler(async (req, res, next) => {
-
   console.log(req.user);
   const instructorId = req.user._id;
   const user = await User.findById(instructorId);
@@ -59,17 +56,21 @@ exports.getAllStudentToInstructor = asyncHandler(async (req, res, next) => {
     return next(new ApiError("Instructor not found", 404));
   }
 
-  const instructorCourses = await Course.find({ instructorId: instructorId }).select("_id");
+  const instructorCourses = await Course.find({
+    instructorId: instructorId,
+  }).select("_id");
   const courseIds = instructorCourses.map((course) => course._id);
 
   if (courseIds.length === 0) {
     return next(new ApiError("No courses found for this instructor", 404));
   }
 
-  const countStudent = await StudentCourse.countDocuments({ courses: { $in: courseIds } });
+  const countStudent = await StudentCourse.countDocuments({
+    courses: { $in: courseIds },
+  });
 
   const feature = new apiFeatures(
-      StudentCourse.find({ courses: { $in: courseIds } })
+    StudentCourse.find({ courses: { $in: courseIds } })
       .populate("userId", "name email isActive")
       .populate("courses", "title description price"),
     req.query
@@ -83,7 +84,7 @@ exports.getAllStudentToInstructor = asyncHandler(async (req, res, next) => {
   const { paginationResult, mongooseQuery } = feature;
   const students = await mongooseQuery;
 
-  res.status(200).json({  
+  res.status(200).json({
     message: "Students found",
     results: students.length,
     paginationResult,
@@ -95,7 +96,7 @@ exports.removeStudentFromCourse = asyncHandler(async (req, res, next) => {
   const userId = req.user._id;
   const courseId = req.params.courseId;
 
-  console.log('Removing course from student:', { courseId, userId });
+  console.log("Removing course from student:", { courseId, userId });
 
   if (!userId || !courseId) {
     return next(new ApiError("User ID and Course ID are required", 400));
@@ -115,11 +116,11 @@ exports.removeStudentFromCourse = asyncHandler(async (req, res, next) => {
   await sc.save();
 
   const coursesStudent = await StudentCourse.findById(sc._id)
-    .populate('userId', 'name email')
-    .populate("courses", 'title description price');
+    .populate("userId", "name email")
+    .populate("courses", "title description price");
 
   res.status(200).json({
-    status: 'success',
+    status: "success",
     message: "Course removed from student successfully",
     data: coursesStudent,
   });

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 // import { Iuser } from '../student/modules/iuser';
 import { Iuser } from '../Student/Model/i-user';
@@ -9,7 +9,7 @@ import { environment } from '../../environments/environment';
   providedIn: 'root',
 })
 export class UserApiServices {
-  private apiURL = `http://localhost:3000/api/v1/auth`;
+  private apiURL = `http://localhost:3000/api/v1`;
 
   constructor(private httpClient: HttpClient) {}
 
@@ -34,7 +34,7 @@ export class UserApiServices {
   }
 
   registerUser(userData: Iuser): Observable<Iuser> {
-    return this.httpClient.post<Iuser>(`${this.apiURL}/signup`, userData);
+    return this.httpClient.post<Iuser>(`${this.apiURL}/auth/signup`, userData);
   }
 
   loginUser(credentials: {
@@ -42,8 +42,18 @@ export class UserApiServices {
     password: string;
   }): Observable<{ token: string; user: Iuser }> {
     return this.httpClient.post<{ token: string; user: Iuser }>(
-      `${this.apiURL}/login`,
+      `${this.apiURL}/auth/login`,
       credentials
     );
+  }
+
+  getCoursesUser(): Observable<any> {
+    const header = new HttpHeaders({
+      Authorization: `Bearer ${localStorage.getItem('token')}`,
+    });
+
+    return this.httpClient.get<any>(`${this.apiURL}/studentCourse`, {
+      headers: header,
+    });
   }
 }

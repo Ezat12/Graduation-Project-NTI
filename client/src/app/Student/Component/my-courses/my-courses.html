@@ -1,0 +1,40 @@
+<div class="my-courses-container">
+  <h2 class="page-title">🎓 My Courses</h2>
+
+  @if (courses.length === 0) {
+  <div class="empty-state">
+    <!-- <img src="/assets/empty-courses.svg" alt="No Courses" class="empty-img" /> -->
+    <h3>No Courses Found</h3>
+    <p>You haven’t enrolled in any courses yet.</p>
+    <button routerLink="/courses" class="explore-btn">Explore Courses</button>
+  </div>
+  }
+
+  @else {
+  <div class="courses-grid">
+    @for (course of courses; track course._id) {
+    <div class="course-card">
+      <div class="course-image">
+        <img [src]="course.imageUrl || '/assets/default-course.jpg'" [alt]="course.title" />
+      </div>
+
+      <div class="course-content">
+        <h3 class="course-title">{{ course.title }}</h3>
+        <p class="course-description">
+          {{ course.description || 'No description available' }}
+        </p>
+        <div class="course-meta">
+          <span class="level">{{ course.level || 'All Levels' }}</span>
+          <span class="rating">⭐ {{ course.rating || 0 }}/5</span>
+        </div>
+
+        <div class="course-footer">
+          <button class="btn-details" (click)="showCourse(course)">Show Course</button>
+          <!-- <button class="btn-continue">Continue</button> -->
+        </div>
+      </div>
+    </div>
+    }
+  </div>
+  }
+</div>

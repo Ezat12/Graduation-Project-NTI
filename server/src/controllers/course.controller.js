@@ -40,6 +40,10 @@ exports.getCourses = asyncHandler(async (req, res) => {
 exports.getInstructorCourses = asyncHandler(async (req, res, next) => {
   const instructorId = req.user?._id;
 
+  if (req.user.role !== "instructor") {
+    return next(new ApiError("You are not allowed to access this route", 403));
+  }
+
   const countCourses = await Course.countDocuments({ instructorId });
   const feature = new apiFeatures(
     Course.find({ instructorId }).populate("category", "_id name"),
@@ -61,6 +65,35 @@ exports.getInstructorCourses = asyncHandler(async (req, res, next) => {
     data: courses,
   });
 });
+
+// exports.getCoursesStudent = asyncHandler(async (req, res, next) => {
+//   const studentId = req.user?._id;
+
+//   if (req.user.role !== "student") {
+//     return next(new ApiError("You are not allowed to access this route", 403));
+//   }
+
+//   const countCourses = await Course.countDocuments({ studentId });
+//   const feature = new apiFeatures(
+//     Course.find({ studentId }).populate("category", "_id name"),
+//     req.query
+//   )
+//     .fields()
+//     .sort()
+//     .filtering()
+//     .search()
+//     .pagination(countCourses);
+
+//   const { paginationResult, mongooseQuery } = feature;
+//   const courses = await mongooseQuery;
+
+//   res.status(200).json({
+//     status: "success",
+//     results: courses.length,
+//     paginationResult,
+//     data: courses,
+//   });
+// });
 
 exports.getCourseById = asyncHandler(async (req, res) => {
   const course = await Course.findById(req.params.id).populate(

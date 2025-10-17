@@ -13,12 +13,20 @@ const studentCourseRoutes = require("./routes/studentCourse.route");
 const uploadRoute = require("./routes/upload.route");
 const errorHandler = require("./middleware/errorHandler.middleware");
 const courseRoute = require("./routes/course.route");
+const orderRoute = require("./routes/order.route");
+const { webhookCheckout } = require("./controllers/order.controller");
 app.use(express.json());
 dotenv.config({});
 app.use(cors());
 
 // Connection DB
 connectionDB();
+
+app.post(
+  "/webhook-checkout",
+  express.raw({ type: "application/json" }),
+  webhookCheckout
+);
 
 app.use("/api/v1/users", usersRoute);
 app.use("/api/v1/auth", authRoute);
@@ -27,6 +35,7 @@ app.use("/api/v1/reviews", reviewRoutes);
 app.use("/api/v1/categories", categoryRoutes);
 app.use("/api/v1/studentCourse", studentCourseRoutes);
 app.use("/api/v1/courses", courseRoute);
+app.use("/api/v1/orders", orderRoute);
 
 app.use((req, res, next) => {
   next(new ApiError("Route is not success", 400));

@@ -2,7 +2,7 @@ import { inject } from '@angular/core';
 import { CanActivateFn, Router } from '@angular/router';
 import { User } from '../services/user';
 import { ToastrService } from 'ngx-toastr';
-import { catchError, map, of } from 'rxjs';
+import { catchError, filter, map, of, take } from 'rxjs';
 
 export const instructorGuard: CanActivateFn = (route, state) => {
   const router = inject(Router);
@@ -10,8 +10,11 @@ export const instructorGuard: CanActivateFn = (route, state) => {
   const toaster = inject(ToastrService);
 
   return userService.getUser().pipe(
+    filter((res: any) => res !== null && res !== undefined),
+    take(1),
     map((res: any) => {
-      if (res?.data?.role === 'instructor') {
+      console.log('Guard user:', res);
+      if (res?.role === 'instructor') {
         return true;
       } else {
         toaster.error('Access Denied! You are not an Instructor');

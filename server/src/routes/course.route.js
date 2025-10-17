@@ -9,6 +9,7 @@ const {
   getInstructorCourses,
   updateLecture,
   addLecture,
+  getCoursesStudent,
 } = require("../controllers/course.controller");
 const { courseValidationRules } = require("../validations/courses.validator");
 const protectAuth = require("../middleware/protectAuth.middleware");
@@ -27,6 +28,7 @@ router
   .delete(deleteCourse);
 
 router.get("/instructor/my-courses", getInstructorCourses);
+// router.get("/student/my-courses", getCoursesStudent);
 
 router.post("/:courseId/lectures", addLecture);
 
