@@ -56,13 +56,10 @@ export class DetailsCourse {
 
   purchaseCourse() {
     if (this.course.price === 0) {
-      // Enroll in free course
       console.log('Enrolling in free course:', this.course._id);
       alert('Successfully enrolled in the course!');
     } else {
-      // Purchase paid course
       console.log('Purchasing course:', this.course._id);
-      // Add your purchase logic here
       alert('Redirecting to checkout...');
     }
   }

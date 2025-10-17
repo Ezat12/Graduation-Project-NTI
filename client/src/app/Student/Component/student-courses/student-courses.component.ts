@@ -61,7 +61,7 @@ export class StudentCoursesComponent implements OnInit {
 
   showPaymentForm = false;
   selectedCourse: any = null;
-  paymentForm: FormGroup; // إضافة FormGroup للدفع
+  paymentForm: FormGroup; 
 
   categories: string[] = [];
   languages: string[] = [];
@@ -77,7 +77,6 @@ export class StudentCoursesComponent implements OnInit {
     private router: Router,
     private ngZone: NgZone
   ) {
-    // Filter Form
     this.filterForm = this.fb.group({
       category: [''],
       language: [''],
@@ -86,7 +85,6 @@ export class StudentCoursesComponent implements OnInit {
       maxPrice: [''],
     });
 
-    // Payment Form مع Validation
     this.paymentForm = this.fb.group({
       cardNumber: ['', [Validators.required, Validators.minLength(16), Validators.maxLength(16)]],
       expiryDate: ['', [Validators.required]],
@@ -216,7 +214,6 @@ export class StudentCoursesComponent implements OnInit {
     event.target.src = '/assets/default-course.jpg';
   }
 
-  ///////// Payment Form Logic /////////
   onPurchase(course: any) {
     console.log('Purchase event received:', course);
     this.course = course;
@@ -227,16 +224,15 @@ export class StudentCoursesComponent implements OnInit {
     console.log('Opening payment form for course:', course);
     this.selectedCourse = course;
     this.showPaymentForm = true;
-    this.paymentForm.reset(); // reset النموذج عند الفتح
+    this.paymentForm.reset();
   }
 
   closePaymentForm() {
     this.showPaymentForm = false;
     this.selectedCourse = null;
-    this.paymentForm.reset(); // reset النموذج عند الإغلاق
+    this.paymentForm.reset();
   }
 
-  // دالة format لرقم البطاقة
   formatCardNumber(event: any) {
     let value = event.target.value.replace(/\s+/g, '').replace(/[^0-9]/gi, '');
     const matches = value.match(/\d{4,16}/g);
@@ -254,7 +250,6 @@ export class StudentCoursesComponent implements OnInit {
     this.paymentForm.patchValue({ cardNumber: value });
   }
 
-  // دالة format لتاريخ الانتهاء
   formatExpiryDate(event: any) {
     let value = event.target.value.replace(/\D/g, '');
 
@@ -265,13 +260,11 @@ export class StudentCoursesComponent implements OnInit {
     this.paymentForm.patchValue({ expiryDate: value });
   }
 
-  // دالة format لـ CVC
   formatCVC(event: any) {
     let value = event.target.value.replace(/\D/g, '');
     this.paymentForm.patchValue({ cvc: value });
   }
 
-  // التحقق من صلاحية التاريخ
   validateExpiryDate(): boolean {
     const expiryDate = this.paymentForm.get('expiryDate')?.value;
     if (!expiryDate) return true;
@@ -291,7 +284,6 @@ export class StudentCoursesComponent implements OnInit {
   }
 
   pay() {
-    // Mark all fields as touched to show validation errors
     Object.keys(this.paymentForm.controls).forEach((key) => {
       this.paymentForm.get(key)?.markAsTouched();
     });
@@ -307,30 +299,24 @@ export class StudentCoursesComponent implements OnInit {
 
       console.log(this.selectedCourse.id);
 
-      // Simulate payment processing
       this.service.purchaseCourse(this.course._id).subscribe({
         next: (res: any) => {
-          console.log('🟢 NEXT - Payment successful:', res);
           this.toastr.success('✅ Payment successful!');
           this.router.navigate(['/my-courses']);
         },
         error: (error) => {
-          console.error('🔴 ERROR - Payment error:', error);
           this.toastr.error('❌ Payment failed.');
         },
         complete: () => {
-          console.log('🟡 COMPLETE - Subscription completed');
           this.toastr.success('✅ Payment successful!');
           this.router.navigate(['/my-courses']);
         },
       });
     } else {
-      console.log('Form is invalid');
       this.toastr.error('❌ Please fill all required fields correctly.');
     }
   }
 
-  // Helper methods للوصول إلى الـ form controls في الـ template
   get cardNumber() {
     return this.paymentForm.get('cardNumber');
   }

@@ -1,4 +1,3 @@
-/* 🎯 صفحة التفاصيل العامة */
 .course-details {
   max-width: 1200px;
   margin: 0 auto;
@@ -9,7 +8,6 @@
   min-height: 100vh;
 }
 
-/* 🔹 الهيدر المحسن */
 .course-header {
   display: flex;
   gap: 30px;
@@ -165,13 +163,11 @@
   box-shadow: 0 6px 20px -1px rgba(16, 185, 129, 0.4);
 }
 
-/* 🔹 الجسم الأساسي */
 .course-body {
   display: flex;
   gap: 30px;
 }
 
-/* 🔸 المحتوى الرئيسي */
 .main-content {
   flex: 2.5;
   background: white;
@@ -180,7 +176,6 @@
   overflow: hidden;
 }
 
-/* 🔹 التابات المحسنة */
 .tabs {
   display: flex;
   border-bottom: 1px solid #e5e7eb;
@@ -211,7 +206,6 @@
   background: white;
 }
 
-/* 🔸 محتوى التبويب */
 .tab-content {
   padding: 30px;
 }
@@ -222,8 +216,6 @@
   color: #111827;
   margin-bottom: 20px;
 }
-
-/* 🔹 قسم المحاضرات */
 .lectures-section h3 {
   display: flex;
   align-items: center;
@@ -365,7 +357,6 @@
   color: #6b7280;
 }
 
-/* 🔹 قسم الوصف */
 .course-description {
   line-height: 1.7;
   color: #4b5563;
@@ -395,7 +386,6 @@
   font-weight: 500;
 }
 
-/* 🔹 قسم الأهداف */
 .objectives-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -534,7 +524,6 @@
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
 
-/* 🔹 التحميل والخطأ */
 .loading-container,
 .error-container {
   text-align: center;
@@ -588,7 +577,6 @@
   transform: translateY(-1px);
 }
 
-/* 📱 استجابة الموبايل */
 @media (max-width: 1024px) {
   .course-header {
     flex-direction: column;

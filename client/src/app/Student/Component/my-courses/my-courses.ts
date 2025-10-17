@@ -41,6 +41,6 @@ export class MyCourses implements OnInit {
   }
 
   showCourse(course: any) {
-    // this.router.navigate(['/course', course._id]);
+    this.router.navigate(['/course/progress', course._id]);
   }
 }

@@ -165,13 +165,11 @@
   </div>
 </div>
 
-<!-- Payment Modal -->
 @if (showPaymentForm && selectedCourse) {
 <div class="payment-modal">
   <div class="modal-overlay" (click)="closePaymentForm()"></div>
 
   <div class="modal-content">
-    <!-- Header -->
     <div class="modal-header">
       <h2>Complete Your Purchase</h2>
       <button type="button" class="close-btn" (click)="closePaymentForm()">
@@ -186,7 +184,6 @@
       </button>
     </div>
 
-    <!-- Course Summary -->
     <div class="course-summary">
       <div class="summary-header">
         <h3>Order Summary</h3>
@@ -220,13 +217,10 @@
       </div>
     </div>
 
-    <!-- Payment Form -->
     <form [formGroup]="paymentForm" (ngSubmit)="pay()" class="payment-form">
-      <!-- Card Information -->
       <div class="form-section">
         <h3>Card Information</h3>
 
-        <!-- Card Number -->
         <div class="form-group">
           <label class="form-label">Card Number</label>
           <div class="card-input-wrapper">
@@ -258,7 +252,6 @@
           </div>
         </div>
 
-        <!-- Expiry and CVC -->
         <div class="form-row">
           <div class="form-group">
             <label class="form-label">Expiry Date</label>
@@ -302,11 +295,9 @@
         </div>
       </div>
 
-      <!-- Cardholder Information -->
       <div class="form-section">
         <h3>Cardholder Information</h3>
 
-        <!-- Full Name -->
         <div class="form-group">
           <label class="form-label">Full Name on Card</label>
           <input
@@ -329,7 +320,6 @@
           </div>
         </div>
 
-        <!-- Country -->
         <div class="form-group">
           <label class="form-label">Country or Region</label>
           <select
@@ -354,7 +344,6 @@
           </div>
         </div>
 
-        <!-- Email (Optional) -->
         <div class="form-group">
           <label class="form-label">Email Address <span class="optional">(Optional)</span></label>
           <input
@@ -373,7 +362,6 @@
         </div>
       </div>
 
-      <!-- Security Notice -->
       <div class="security-notice">
         <div class="lock-icon">🔒</div>
         <div class="security-text">
@@ -382,7 +370,6 @@
         </div>
       </div>
 
-      <!-- Submit Button -->
       <div class="form-actions">
         <button
           type="submit"
