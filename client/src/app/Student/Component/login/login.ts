@@ -24,7 +24,7 @@ export class Login {
 
   onSubmit() {
     console.log('form submitted: ', this.loginForm.value);
-    
+
     if(this.loginForm.valid){
       const userData = this.loginForm.value
 
@@ -43,12 +43,12 @@ export class Login {
         error: err => {
           console.error('login error: ', err);
           alert('Invalid Email or Password')
-          
+
         }
       })
     } else {
       console.error('form is invalid');
-      
+
     }
   }
 
