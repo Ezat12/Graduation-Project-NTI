@@ -2,10 +2,11 @@ import { CommonModule } from '@angular/common';
 import { Component, Input, OnInit } from '@angular/core';
 import { UserApiServices } from '../../../services/user-api-services';
 import { Router } from '@angular/router';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-course-card',
-  imports: [CommonModule],
+  imports: [CommonModule, RouterModule],
   templateUrl: './course-card.html',
   styleUrl: './course-card.css',
 })

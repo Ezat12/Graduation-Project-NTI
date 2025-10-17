@@ -4,7 +4,7 @@ import { ICourse } from '../Model/i-course';
 import { Observable } from 'rxjs';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class CourseService {
   private apiUrl = 'http://localhost:3000/api/v1/courses';
@@ -13,11 +13,18 @@ export class CourseService {
   constructor(private http: HttpClient) {}
 
   getCourses(): Observable<any> {
-
     const headers = new HttpHeaders({
-      Authorization: `Bearer ${this.token}`
+      Authorization: `Bearer ${this.token}`,
     });
 
     return this.http.get(this.apiUrl, { headers });
+  }
+
+  getCourseById(id: string): Observable<any> {
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${this.token}`,
+    });
+
+    return this.http.get(`${this.apiUrl}/${id}`, { headers });
   }
 }

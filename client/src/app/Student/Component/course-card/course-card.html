@@ -103,7 +103,9 @@
       }@else {
 
       <div class="course-actions">
-        <button class="action-btn details-btn" (click)="viewCourseDetails(course)">Details</button>
+        <button routerLink="/details/{{ course._id }}" class="action-btn details-btn">
+          Details
+        </button>
         <button
           class="action-btn enroll-btn"
           (click)="purchaseCourse(course)"

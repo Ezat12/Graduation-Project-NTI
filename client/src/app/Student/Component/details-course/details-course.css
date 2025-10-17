@@ -1,0 +1,667 @@
+/* 🎯 صفحة التفاصيل العامة */
+.course-details {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+  font-family: 'Inter', 'Poppins', sans-serif;
+  color: #1f2937;
+  background: #f8fafc;
+  min-height: 100vh;
+}
+
+/* 🔹 الهيدر المحسن */
+.course-header {
+  display: flex;
+  gap: 30px;
+  background: white;
+  border-radius: 16px;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  padding: 30px;
+  margin-bottom: 30px;
+}
+
+.course-image {
+  position: relative;
+  flex-shrink: 0;
+}
+
+.course-image img {
+  width: 400px;
+  height: 250px;
+  object-fit: cover;
+  border-radius: 12px;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+}
+
+.course-badges {
+  position: absolute;
+  top: 15px;
+  left: 15px;
+  display: flex;
+  gap: 8px;
+}
+
+.level-badge,
+.featured-badge {
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.level-badge {
+  background: #3b82f6;
+  color: white;
+}
+
+.featured-badge {
+  background: linear-gradient(135deg, #f59e0b, #d97706);
+  color: white;
+}
+
+.header-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.header-info h1 {
+  font-size: 2.25rem;
+  font-weight: 700;
+  color: #111827;
+  margin-bottom: 15px;
+  line-height: 1.2;
+}
+
+.instructor-info {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.instructor-avatar {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  overflow: hidden;
+}
+
+.instructor-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.instructor-name {
+  font-weight: 600;
+  color: #374151;
+  margin-bottom: 4px;
+}
+
+.instructor-email {
+  color: #6b7280;
+  font-size: 0.875rem;
+}
+
+.course-meta {
+  display: flex;
+  gap: 25px;
+  margin-bottom: 25px;
+}
+
+.meta-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #6b7280;
+  font-size: 0.9rem;
+}
+
+.meta-icon {
+  width: 18px;
+  height: 18px;
+  color: #6b7280;
+}
+
+.price-section {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 20px;
+  border-top: 1px solid #e5e7eb;
+}
+
+.price {
+  font-size: 2rem;
+  font-weight: 700;
+}
+
+.free-price {
+  color: #10b981;
+}
+
+.paid-price {
+  color: #1f2937;
+}
+
+.purchase-btn {
+  padding: 12px 30px;
+  background: linear-gradient(135deg, #10b981, #059669);
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-weight: 600;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 6px -1px rgba(16, 185, 129, 0.3);
+}
+
+.purchase-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px -1px rgba(16, 185, 129, 0.4);
+}
+
+/* 🔹 الجسم الأساسي */
+.course-body {
+  display: flex;
+  gap: 30px;
+}
+
+/* 🔸 المحتوى الرئيسي */
+.main-content {
+  flex: 2.5;
+  background: white;
+  border-radius: 16px;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}
+
+/* 🔹 التابات المحسنة */
+.tabs {
+  display: flex;
+  border-bottom: 1px solid #e5e7eb;
+  background: #f8fafc;
+}
+
+.tabs button {
+  flex: 1;
+  padding: 16px 20px;
+  background: transparent;
+  border: none;
+  font-weight: 500;
+  color: #6b7280;
+  cursor: pointer;
+  border-bottom: 3px solid transparent;
+  transition: all 0.3s ease;
+  font-size: 0.95rem;
+}
+
+.tabs button:hover {
+  color: #374151;
+  background: #f1f5f9;
+}
+
+.tabs button.active {
+  color: #10b981;
+  border-bottom-color: #10b981;
+  background: white;
+}
+
+/* 🔸 محتوى التبويب */
+.tab-content {
+  padding: 30px;
+}
+
+.tab-content h3 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #111827;
+  margin-bottom: 20px;
+}
+
+/* 🔹 قسم المحاضرات */
+.lectures-section h3 {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.lectures-list {
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.lecture-item {
+  border-bottom: 1px solid #e5e7eb;
+  background: white;
+  transition: all 0.3s ease;
+}
+
+.lecture-item:last-child {
+  border-bottom: none;
+}
+
+.lecture-item.free-preview {
+  background: #f0fdf4;
+}
+
+.lecture-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.lecture-header:hover {
+  background: #f8fafc;
+}
+
+.lecture-info {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  flex: 1;
+}
+
+.lecture-number {
+  width: 32px;
+  height: 32px;
+  background: #10b981;
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  font-size: 0.875rem;
+  flex-shrink: 0;
+}
+
+.lecture-title {
+  font-weight: 500;
+  color: #374151;
+  margin-bottom: 4px;
+}
+
+.preview-badge {
+  background: #10b981;
+  color: white;
+  padding: 4px 8px;
+  border-radius: 6px;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.lecture-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.preview-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 16px;
+  background: #10b981;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.preview-btn:hover {
+  background: #059669;
+  transform: translateY(-1px);
+}
+
+.play-icon {
+  width: 16px;
+  height: 16px;
+}
+
+.expand-icon {
+  width: 20px;
+  height: 20px;
+  transition: transform 0.3s ease;
+}
+
+.expand-icon.expanded {
+  transform: rotate(180deg);
+}
+
+.lecture-content {
+  padding: 0 20px 20px 75px;
+}
+
+.video-player {
+  margin-bottom: 15px;
+}
+
+.video-element {
+  width: 100%;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+.lecture-description {
+  color: #6b7280;
+  font-size: 0.9rem;
+}
+
+.empty-lectures {
+  text-align: center;
+  padding: 40px;
+  color: #6b7280;
+}
+
+/* 🔹 قسم الوصف */
+.course-description {
+  line-height: 1.7;
+  color: #4b5563;
+  font-size: 1rem;
+  margin-bottom: 25px;
+}
+
+.course-categories h4 {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #374151;
+  margin-bottom: 12px;
+}
+
+.categories-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.category-tag {
+  background: #e0f2fe;
+  color: #0369a1;
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+/* 🔹 قسم الأهداف */
+.objectives-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 15px;
+}
+
+.objective-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 12px;
+  background: #f0fdf4;
+  border-radius: 8px;
+  border-left: 4px solid #10b981;
+}
+
+.check-icon {
+  width: 20px;
+  height: 20px;
+  color: #10b981;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+/* 🔹 السايدبار */
+.sidebar {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.card {
+  background: white;
+  padding: 25px;
+  border-radius: 16px;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  border: 1px solid #e5e7eb;
+}
+
+.card h3 {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #111827;
+  margin-bottom: 18px;
+  border-left: 4px solid #10b981;
+  padding-left: 12px;
+}
+
+.includes-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.includes-list li {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 0;
+  border-bottom: 1px solid #f1f5f9;
+  color: #4b5563;
+}
+
+.includes-list li:last-child {
+  border-bottom: none;
+}
+
+.include-icon {
+  width: 18px;
+  height: 18px;
+  color: #10b981;
+  flex-shrink: 0;
+}
+
+.languages-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.language-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px;
+  background: #f8fafc;
+  border-radius: 8px;
+  color: #4b5563;
+}
+
+.language-icon {
+  width: 18px;
+  height: 18px;
+  color: #6b7280;
+}
+
+.share-buttons {
+  display: flex;
+  gap: 10px;
+}
+
+.share-btn {
+  flex: 1;
+  padding: 12px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.share-btn svg {
+  width: 20px;
+  height: 20px;
+}
+
+.share-btn.facebook {
+  background: #1877f2;
+  color: white;
+}
+
+.share-btn.twitter {
+  background: #1da1f2;
+  color: white;
+}
+
+.share-btn.linkedin {
+  background: #0077b5;
+  color: white;
+}
+
+.share-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* 🔹 التحميل والخطأ */
+.loading-container,
+.error-container {
+  text-align: center;
+  padding: 60px 20px;
+  background: white;
+  border-radius: 16px;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+.loading-spinner {
+  width: 50px;
+  height: 50px;
+  border: 4px solid #e5e7eb;
+  border-top: 4px solid #10b981;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin: 0 auto 20px;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.error-container h3 {
+  color: #dc2626;
+  margin-bottom: 10px;
+}
+
+.error-container p {
+  color: #6b7280;
+  margin-bottom: 20px;
+}
+
+.back-btn {
+  padding: 10px 20px;
+  background: #10b981;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.back-btn:hover {
+  background: #059669;
+  transform: translateY(-1px);
+}
+
+/* 📱 استجابة الموبايل */
+@media (max-width: 1024px) {
+  .course-header {
+    flex-direction: column;
+  }
+
+  .course-image img {
+    width: 100%;
+    height: 200px;
+  }
+}
+
+@media (max-width: 768px) {
+  .course-details {
+    padding: 15px;
+  }
+
+  .course-body {
+    flex-direction: column;
+  }
+
+  .tabs {
+    flex-direction: column;
+  }
+
+  .tabs button {
+    text-align: left;
+  }
+
+  .lecture-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 15px;
+  }
+
+  .lecture-actions {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .lecture-content {
+    padding: 0 20px 20px 20px;
+  }
+
+  .price-section {
+    flex-direction: column;
+    gap: 15px;
+    align-items: flex-start;
+  }
+
+  .purchase-btn {
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .course-header {
+    padding: 20px;
+  }
+
+  .header-info h1 {
+    font-size: 1.75rem;
+  }
+
+  .tab-content {
+    padding: 20px;
+  }
+
+  .objectives-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .card {
+    padding: 20px;
+  }
+}
